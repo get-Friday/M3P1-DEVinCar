@@ -1,8 +1,8 @@
-namespace DEVinCar.Controller.Models
+namespace DEVinCar.Service.Models
 {
     public class User
     {
-        public int Id {get; internal set;}
+        public int Id { get; internal set; }
         public string Email { get; set; }
         public string Password { internal get; set; }
         public string Name { get; set; }
@@ -10,7 +10,7 @@ namespace DEVinCar.Controller.Models
 
         public User()
         {
-            
+
         }
         public User(int id, string email, string password, string name, DateTime birthDate)
         {

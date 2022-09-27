@@ -1,4 +1,4 @@
-namespace DEVinCar.Controller.DTOs;
+namespace DEVinCar.Service.DTOs;
 
 public class DeliveryDTO
 {

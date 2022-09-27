@@ -1,14 +1,14 @@
 using System.ComponentModel.DataAnnotations;
 
-namespace DEVinCar.Controller.DTOs
+namespace DEVinCar.Service.DTOs
 {
-     public class CityDTO
-    {     
+    public class CityDTO
+    {
         [Required(ErrorMessage = "The name is required")]
-        [MaxLength(255)]  
+        [MaxLength(255)]
         public string Name { get; set; }
 
-       
-       
+
+
     }
 }

@@ -1,4 +1,4 @@
-namespace DEVinCar.Controller.Models
+namespace DEVinCar.Service.Models
 {
     public class Address
     {
@@ -11,6 +11,6 @@ namespace DEVinCar.Controller.Models
 
         public virtual City City { get; set; }
 
-        public virtual List<Delivery> Deliveries {get; set;}
+        public virtual List<Delivery> Deliveries { get; set; }
     }
 }

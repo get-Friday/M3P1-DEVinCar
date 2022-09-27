@@ -1,4 +1,4 @@
-﻿namespace DEVinCar.Controller.Models
+﻿namespace DEVinCar.Service.Models
 {
     public class Car
     {
@@ -6,7 +6,7 @@
         public string Name { get; set; }
         public decimal SuggestedPrice { get; set; }
         public virtual List<SaleCar> Sales { get; set; }
-        public Car ()
+        public Car()
         {
         }
         public Car(int id, string name, decimal suggestedPrice)

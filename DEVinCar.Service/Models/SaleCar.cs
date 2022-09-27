@@ -1,4 +1,4 @@
-﻿namespace DEVinCar.Controller.Models
+﻿namespace DEVinCar.Service.Models
 {
     public class SaleCar
     {

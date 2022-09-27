@@ -1,7 +1,9 @@
 ﻿using DEVinCar.Controller.Models;
 
-namespace DEVinCar.Controller.ViewModels {
-    public class AddressViewModel {
+namespace DEVinCar.Service.ViewModels
+{
+    public class AddressViewModel
+    {
         public int Id { get; set; }
         public int CityId { get; set; }
         public string Street { get; set; }
@@ -10,7 +12,8 @@ namespace DEVinCar.Controller.ViewModels {
         public string Complement { get; set; }
         public string CityName { get; set; }
 
-        public AddressViewModel(int id,string street,int cityId,string cityName,int number,string complement, string cep) {
+        public AddressViewModel(int id, string street, int cityId, string cityName, int number, string complement, string cep)
+        {
             Id = id;
             Street = street;
             CityId = cityId;

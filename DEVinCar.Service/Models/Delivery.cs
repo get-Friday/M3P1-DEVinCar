@@ -2,7 +2,7 @@ using System.Security.AccessControl;
 using System;
 using Microsoft.EntityFrameworkCore;
 
-namespace DEVinCar.Controller.Models;
+namespace DEVinCar.Service.Models;
 public class Delivery
 {
     public int Id { get; internal set; }
@@ -13,5 +13,5 @@ public class Delivery
     public virtual Sale Sale { get; set; }
     public Delivery()
     {
-    }  
+    }
 }

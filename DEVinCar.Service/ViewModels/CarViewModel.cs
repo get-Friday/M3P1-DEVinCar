@@ -1,5 +1,6 @@
 using DEVinCar.Controller.Models;
-namespace DEVinCar.Controller.ViewModels;
+
+namespace DEVinCar.Service.ViewModels;
 public class CarViewModel
 {
     public string Name { get; set; }

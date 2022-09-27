@@ -1,18 +1,19 @@
 using System.ComponentModel.DataAnnotations;
 
-namespace DEVinCar.Controller.Annotations;
+namespace DEVinCar.Service.Annotations;
 
 public class DistinctCharactersAttribute : ValidationAttribute
 {
-    protected override ValidationResult IsValid(object value, ValidationContext validationContext)    
-    {   
+    protected override ValidationResult IsValid(object value, ValidationContext validationContext)
+    {
         string password = value.ToString();
         var arrPassword = password.ToCharArray().ToList();
 
-        foreach (char letter in arrPassword){
-            if(letter != arrPassword[0])
+        foreach (char letter in arrPassword)
+        {
+            if (letter != arrPassword[0])
                 return ValidationResult.Success;
-        } 
-        return new ValidationResult("Invalid Password.");    
+        }
+        return new ValidationResult("Invalid Password.");
     }
 }

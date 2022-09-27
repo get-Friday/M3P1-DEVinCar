@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace DEVinCar.Controller.DTOs
+namespace DEVinCar.Service.DTOs
 {
     public class SaleDTO
     {

@@ -1,6 +1,7 @@
 using System.Runtime.InteropServices;
 using DEVinCar.Controller.Models;
-namespace DEVinCar.Controller.ViewModels;
+
+namespace DEVinCar.Service.ViewModels;
 public class SaleViewModel
 {
     public string SellerName { get; set; }

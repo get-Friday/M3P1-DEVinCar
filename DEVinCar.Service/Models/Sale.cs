@@ -1,4 +1,4 @@
-﻿namespace DEVinCar.Controller.Models
+﻿namespace DEVinCar.Service.Models
 {
     public class Sale
     {
@@ -9,7 +9,7 @@
         public virtual User UserBuyer { get; set; }
         public virtual User UserSeller { get; set; }
         public virtual List<SaleCar> Cars { get; set; }
-        public virtual List<Delivery> Deliveries { get; set; }      
+        public virtual List<Delivery> Deliveries { get; set; }
         public Sale()
         {
         }
