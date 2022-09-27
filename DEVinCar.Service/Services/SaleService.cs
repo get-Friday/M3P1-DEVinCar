@@ -1,6 +1,8 @@
 ﻿using DEVinCar.Service.DTOs;
 using DEVinCar.Service.Interfaces.Repositories;
 using DEVinCar.Service.Interfaces.Services;
+using DEVinCar.Service.Models;
+using DEVinCar.Service.ViewModels;
 
 namespace DEVinCar.Service.Services
 {
@@ -12,25 +14,39 @@ namespace DEVinCar.Service.Services
         {
             _saleRepository = saleRepository;
         }
-        public IList<SaleDTO> GetItemsSale(int saleId)
+        public IList<SaleViewModel> GetItemsSale(int saleId)
         {
-            throw new NotImplementedException();
+            return _saleRepository.GetItemsSale(saleId)
+                .Select(s => new SaleViewModel
+                {
+                    SellerName = s.UserSeller.Name,
+                    BuyerName = s.UserBuyer.Name,
+                    SaleDate = s.SaleDate,
+                    Itens = s.Cars.Select(sc => new CarViewModel
+                    {
+                        Name = sc.Car.Name,
+                        UnitPrice = sc.UnitPrice,
+                        Amount = sc.Amount,
+                        Total = sc.Sum(sc.UnitPrice, sc.Amount)
+                    }).ToList()
+                })
+                .ToList();
         }
         public void PostSale(SaleCarDTO saleCar)
         {
-            throw new NotImplementedException();
+            _saleRepository.PostSale(new SaleCar(saleCar));
         }
         public void PostDelivery(DeliveryDTO delivery)
         {
-            throw new NotImplementedException();
+            _saleRepository.PostDelivery(new Delivery(delivery));
         }
         public void AlterCarAmount(SaleCarDTO salesCar)
         {
-            throw new NotImplementedException();
+            _saleRepository.AlterCarAmount(new SaleCar(salesCar));
         }
         public void AlterUnitPrice(SaleCarDTO salesCar)
         {
-            throw new NotImplementedException();
+            _saleRepository.AlterUnitPrice(new SaleCar(salesCar));
         }
     }
 }
