@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using DEVinCar.Service.Models;
+using System.ComponentModel.DataAnnotations;
 
 namespace DEVinCar.Service.DTOs
 {
@@ -10,5 +11,14 @@ namespace DEVinCar.Service.DTOs
         public string Name { get; set; }
         public decimal SuggestedPrice { get; set; }
 
+        public CarDTO()
+        {
+        }
+        public CarDTO(Car car)
+        {
+            Id = car.Id;
+            Name = car.Name;
+            SuggestedPrice = car.SuggestedPrice;
+        }
     }
 }
