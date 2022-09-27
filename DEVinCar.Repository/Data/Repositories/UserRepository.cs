@@ -8,7 +8,7 @@ namespace DEVinCar.Repository.Data.Repositories
         public UserRepository(DevInCarDbContext context) : base(context)
         {
         }
-        public IEnumerable<Sale> GetByIdbuy(int userId)
+        public IEnumerable<Sale> GetSalesByUserId(int userId)
         {
             return _context.Sales.Where(s => s.BuyerId == userId);
         }
