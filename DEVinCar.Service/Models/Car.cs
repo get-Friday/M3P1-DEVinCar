@@ -1,11 +1,15 @@
-﻿namespace DEVinCar.Service.Models
+﻿using DEVinCar.Service.DTOs;
+
+namespace DEVinCar.Service.Models
 {
     public class Car
     {
         public int Id { get; internal set; }
         public string Name { get; set; }
         public decimal SuggestedPrice { get; set; }
+
         public virtual List<SaleCar> Sales { get; set; }
+
         public Car()
         {
         }
@@ -14,6 +18,12 @@
             Id = id;
             Name = name;
             SuggestedPrice = suggestedPrice;
+        }
+        public Car(CarDTO car)
+        {
+            Id = car.Id;
+            Name = car.Name;
+            SuggestedPrice = car.SuggestedPrice;
         }
     }
 }
