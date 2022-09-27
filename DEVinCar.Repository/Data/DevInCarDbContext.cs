@@ -40,26 +40,7 @@ public class DevInCarDbContext : DbContext
         modelBuilder.ApplyConfiguration(new CityMap());
         modelBuilder.ApplyConfiguration(new UserMap());
         modelBuilder.ApplyConfiguration(new CarMap());
-
-        modelBuilder.Entity<Sale>(entity =>
-        {
-            entity.ToTable("Sales");
-            entity.HasKey(s => s.Id);
-            entity.Property(s => s.Id)
-                .HasColumnType("int");
-
-            entity.Property(s => s.SaleDate);
-
-
-            entity.HasOne(u => u.UserBuyer)
-                .WithMany()
-                .HasForeignKey(u => u.BuyerId);
-
-            entity.HasOne(u => u.UserSeller)
-                .WithMany()
-                .HasForeignKey(u => u.SellerId);
-        });
-
+        modelBuilder.ApplyConfiguration(new SaleMap());
         modelBuilder.Entity<SaleCar>(entity =>
         {
             entity.ToTable("SaleCars");
