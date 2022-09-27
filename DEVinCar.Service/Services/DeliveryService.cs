@@ -14,7 +14,10 @@ namespace DEVinCar.Service.Services
         }
         public IList<DeliveryDTO> Get()
         {
-            throw new NotImplementedException();
+            return _DeliveryRepository
+                .Get()
+                .Select(d => new DeliveryDTO(d))
+                .ToList();
         }
     }
 }
