@@ -1,6 +1,4 @@
-﻿using DEVinCar.Controller.Models;
-
-namespace DEVinCar.Service.ViewModels
+﻿namespace DEVinCar.Service.ViewModels
 {
     public class GetStateViewModel
     {

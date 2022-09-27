@@ -1,6 +1,3 @@
-using System.Runtime.InteropServices;
-using DEVinCar.Controller.Models;
-
 namespace DEVinCar.Service.ViewModels;
 public class SaleViewModel
 {
