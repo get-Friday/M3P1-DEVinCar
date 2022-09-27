@@ -11,6 +11,6 @@ namespace DEVinCar.Service.Interfaces.Repositories
         void Post(User user);
         void PostSaleUserId(Sale sale);
         void PostBuyUserId(Sale buy);
-        void Delete(int userId);
+        void Delete(User user);
     }
 }

@@ -6,6 +6,6 @@ namespace DEVinCar.Service.Interfaces.Repositories
     {
         IEnumerable<Address> Get();
         void Alter(Address car);
-        void Delete(int id);
+        void Delete(Address address);
     }
 }
