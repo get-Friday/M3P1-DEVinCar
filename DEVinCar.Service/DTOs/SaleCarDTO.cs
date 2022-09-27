@@ -1,12 +1,11 @@
-﻿using System.ComponentModel.DataAnnotations;
-
-namespace DEVinCar.Service.DTOs
+﻿namespace DEVinCar.Service.DTOs
 {
     public class SaleCarDTO
     {
-        public int CarId { get; set; }
+        public int Id { get; internal set; }
         public decimal? UnitPrice { get; set; }
         public int? Amount { get; set; }
+        public int CarId { get; set; }
         public int SaleId { get; set; }
     }
 }
