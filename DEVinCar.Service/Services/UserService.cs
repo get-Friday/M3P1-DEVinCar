@@ -1,7 +1,7 @@
 ﻿using DEVinCar.Service.Interfaces.Repositories;
 using DEVinCar.Service.Interfaces.Services;
 using DEVinCar.Service.DTOs;
-using System.Xml.Linq;
+using DEVinCar.Service.Models;
 
 namespace DEVinCar.Service.Services
 {
@@ -15,35 +15,41 @@ namespace DEVinCar.Service.Services
         }
         public IList<UserDTO> Get()
         {
-            throw new NotImplementedException();
+            return _userRepository.Get()
+                .Select(u => new UserDTO(u))
+                .ToList();
         }
         public UserDTO GetById(int id)
         {
-            throw new NotImplementedException();
+            return new UserDTO(_userRepository.GetById(id));
         }
-        public IList<UserDTO> GetByIdbuy(int userId)
+        public IList<SaleDTO> GetSalesByUserId(int userId)
         {
-            throw new NotImplementedException();
+            return _userRepository.GetSalesByUserId(userId)
+                .Select(s => new SaleDTO(s))
+                .ToList();
         }
-        public IList<UserDTO> GetSalesBySellerId(int userId)
+        public IList<SaleDTO> GetSalesBySellerId(int userId)
         {
-            throw new NotImplementedException();
+            return _userRepository.GetSalesBySellerId(userId)
+                .Select(s => new SaleDTO(s))
+                .ToList();
         }
         public void Post(UserDTO user)
         {
-            throw new NotImplementedException();
+            _userRepository.Post(new User(user));
         }
         public void PostSaleUserId(SaleDTO sale)
         {
-            throw new NotImplementedException();
+            _userRepository.PostSaleUserId(new Sale(sale));
         }
         public void PostBuyUserId(SaleDTO buy)
         {
-            throw new NotImplementedException();
+            _userRepository.PostBuyUserId(new Sale(buy));
         }
         public void Delete(UserDTO user)
         {
-            throw new NotImplementedException();
+            _userRepository.Delete(new User(user));
         }
     }
 }
