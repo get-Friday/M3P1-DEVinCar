@@ -1,3 +1,4 @@
+using DEVinCar.Service.Models;
 using System.ComponentModel.DataAnnotations;
 
 namespace DEVinCar.Service.DTOs
@@ -9,5 +10,15 @@ namespace DEVinCar.Service.DTOs
         [Required(ErrorMessage = "The name is required")]
         [MaxLength(255)]
         public string Name { get; set; }
+
+        public CityDTO()
+        {
+        }
+        public CityDTO(City city)
+        {
+            Id = city.Id;
+            StateId = city.StateId;
+            Name = city.Name;
+        }
     }
 }
