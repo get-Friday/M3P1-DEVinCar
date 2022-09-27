@@ -12,9 +12,6 @@ public class DevInCarDbContext : DbContext
     {
         _configuration = configuration;
     }
-
-    //public DbSet<XYZ> XYZs { get; set; }
-
     public DbSet<City> Cities { get; set; }
     public DbSet<User> Users { get; set; }
     public DbSet<Car> Cars { get; set; }
@@ -42,36 +39,7 @@ public class DevInCarDbContext : DbContext
         modelBuilder.ApplyConfiguration(new CarMap());
         modelBuilder.ApplyConfiguration(new SaleMap());
         modelBuilder.ApplyConfiguration(new SaleCarMap());
-
-        modelBuilder.Entity<Delivery>(entity =>
-        {
-            entity.ToTable("Deliveries");
-
-            entity.HasKey(d => d.Id);
-
-            entity.Property(d => d.Id)
-                .HasColumnType("int");
-
-            entity.Property(d => d.AddressId)
-                .HasColumnType("int");
-
-            entity
-                .Property(d => d.SaleId)
-                .HasColumnType("int");
-
-            entity
-                .Property(d => d.DeliveryForecast);
-
-
-            entity.HasOne<Address>(a => a.Address)
-                .WithMany(d => d.Deliveries)
-                .HasForeignKey(a => a.AddressId);
-
-            entity.HasOne<Sale>(s => s.Sale)
-                .WithMany(d => d.Deliveries)
-                .HasForeignKey(s => s.SaleId);
-
-        });
+        modelBuilder.ApplyConfiguration(new DeliveryMap());
 
         modelBuilder.Entity<Address>(entity =>
         {
