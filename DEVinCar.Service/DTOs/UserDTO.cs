@@ -1,5 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 using DEVinCar.Service.Annotations;
+using DEVinCar.Service.Models;
 
 namespace DEVinCar.Service.DTOs
 {
@@ -23,5 +24,16 @@ namespace DEVinCar.Service.DTOs
         [CheckAge(18)]
         public DateTime BirthDate { get; set; }
 
+        public UserDTO()
+        {
+        }
+        public UserDTO(User user)
+        {
+            Id = user.Id;
+            Email = user.Email;
+            Password = user.Password;
+            Name = user.Name;
+            BirthDate = user.BirthDate;
+        }
     }
 }
