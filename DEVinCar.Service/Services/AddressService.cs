@@ -1,4 +1,5 @@
 ﻿using DEVinCar.Service.DTOs;
+using DEVinCar.Service.Models;
 using DEVinCar.Service.Interfaces.Repositories;
 using DEVinCar.Service.Interfaces.Services;
 
@@ -14,15 +15,18 @@ namespace DEVinCar.Service.Services
         }
         public IList<AddressDTO> Get()
         {
-            throw new NotImplementedException();
+            return _addressRepository
+                .Get()
+                .Select(a => new AddressDTO(a))
+                .ToList();
         }
-        public void Alter(AddressDTO car)
+        public void Alter(AddressDTO address)
         {
-            throw new NotImplementedException();
+            _addressRepository.Alter(new Address(address));
         }
         public void Delete(AddressDTO address)
         {
-            throw new NotImplementedException();
+            _addressRepository.Delete(new Address(address));
         }
     }
 }
