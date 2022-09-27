@@ -1,6 +1,7 @@
 ﻿using DEVinCar.Service.DTOs;
 using DEVinCar.Service.Interfaces.Repositories;
 using DEVinCar.Service.Interfaces.Services;
+using DEVinCar.Service.Models;
 
 namespace DEVinCar.Service.Services
 {
@@ -14,23 +15,26 @@ namespace DEVinCar.Service.Services
         }
         public IList<CarDTO> Get()
         {
-            throw new NotImplementedException();
+            return _carRepository
+                .Get()
+                .Select(c => new CarDTO(c))
+                .ToList();
         }
         public CarDTO GetById(int id)
         {
-            throw new NotImplementedException();
+            return new CarDTO(_carRepository.GetById(id));
         }
         public void Post(CarDTO car)
         {
-            throw new NotImplementedException();
+            _carRepository.Post(new Car(car));
         }
         public void Alter(CarDTO car)
         {
-            throw new NotImplementedException();
+            _carRepository.Alter(new Car(car));
         }
         public void Delete(CarDTO car)
         {
-            throw new NotImplementedException();
+            _carRepository.Delete(new Car(car));
         }
     }
 }
