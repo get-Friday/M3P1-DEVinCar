@@ -41,30 +41,7 @@ public class DevInCarDbContext : DbContext
         modelBuilder.ApplyConfiguration(new SaleMap());
         modelBuilder.ApplyConfiguration(new SaleCarMap());
         modelBuilder.ApplyConfiguration(new DeliveryMap());
-
-        modelBuilder.Entity<Address>(entity =>
-        {
-            entity.ToTable("Addresses");
-
-            entity.HasKey(d => d.Id);
-
-            entity.Property(d => d.CityId).HasColumnType("int").IsRequired();
-
-            entity.Property(d => d.Street).HasMaxLength(150).IsRequired();
-
-            entity.Property(d => d.Cep).HasMaxLength(8).IsRequired();
-
-            entity.Property(d => d.Number).HasColumnType("int").IsRequired();
-
-            entity.Property(d => d.Complement).HasMaxLength(255);
-
-            entity.HasOne<City>(address => address.City)
-            .WithMany(d => d.Addresses)
-            .HasForeignKey(address => address.CityId)
-            .IsRequired();
-        }
-
-      );
+        modelBuilder.ApplyConfiguration(new AddressMap());
 
         modelBuilder.Entity<State>(entity =>
         {
