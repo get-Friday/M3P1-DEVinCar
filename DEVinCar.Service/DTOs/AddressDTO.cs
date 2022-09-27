@@ -1,3 +1,4 @@
+using DEVinCar.Service.Models;
 using System.ComponentModel.DataAnnotations;
 
 namespace DEVinCar.Service.DTOs
@@ -17,5 +18,17 @@ namespace DEVinCar.Service.DTOs
         [MaxLength(255, ErrorMessage = "The Complement must have a maximum of 255 characters")]
         public string Complement { get; set; }
 
+        public AddressDTO()
+        {
+        }
+        public AddressDTO(Address address)
+        {
+            Id = address.Id;
+            CityId = address.CityId;
+            Street = address.Street;
+            Cep = address.Cep;
+            Number = address.Number;
+            Complement = address.Complement;
+        }
     }
 }
