@@ -15,12 +15,12 @@
         {
             return _context.Set<TEntity>().Find(key);
         }
-        public void Insert(TEntity entity)
+        public void Post(TEntity entity)
         {
             _context.Set<TEntity>().Add(entity);
             _context.SaveChanges();
         }
-        public void Edit(TEntity entity)
+        public void Alter(TEntity entity)
         {
             _context.Set<TEntity>().Update(entity);
             _context.SaveChanges();
