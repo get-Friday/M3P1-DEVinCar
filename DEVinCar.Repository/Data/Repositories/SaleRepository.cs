@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace DEVinCar.Repository.Data.Repositories
 {
-    internal class SaleRepository : BaseRepository<Sale, int>, ISaleRepository
+    public class SaleRepository : BaseRepository<Sale, int>, ISaleRepository
     {
         public SaleRepository(DevInCarDbContext context) : base(context)
         {
