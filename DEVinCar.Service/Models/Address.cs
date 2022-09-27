@@ -1,3 +1,5 @@
+using DEVinCar.Service.DTOs;
+
 namespace DEVinCar.Service.Models
 {
     public class Address
@@ -10,7 +12,19 @@ namespace DEVinCar.Service.Models
         public string Complement { get; set; }
 
         public virtual City City { get; set; }
-
         public virtual List<Delivery> Deliveries { get; set; }
+
+        public Address()
+        {
+        }
+        public Address(AddressDTO address)
+        {
+            Id = address.Id;
+            CityId = address.CityId;
+            Street = address.Street;
+            Cep = address.Cep;
+            Number = address.Number;
+            Complement = address.Complement;
+        }
     }
 }
