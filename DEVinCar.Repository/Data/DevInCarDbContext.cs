@@ -2,7 +2,7 @@ using System.Runtime.Serialization;
 using DEVinCar.Controller.Models;
 using Microsoft.EntityFrameworkCore;
 
-namespace DEVinCar.Controller.Data;
+namespace DEVinCar.Repository.Data;
 
 public class DevInCarDbContext : DbContext
 {
@@ -118,7 +118,7 @@ public class DevInCarDbContext : DbContext
 
             entity
                 .Property(c => c.SuggestedPrice)
-                .HasPrecision(18,2);
+                .HasPrecision(18, 2);
             entity
                 .HasData(new[] {
                     new Car (1, "Camaro Chevrolet", 60000M),
@@ -142,7 +142,7 @@ public class DevInCarDbContext : DbContext
                 .HasColumnType("int");
 
             entity.Property(s => s.SaleDate);
-                
+
 
             entity.HasOne(u => u.UserBuyer)
                 .WithMany()
@@ -150,7 +150,7 @@ public class DevInCarDbContext : DbContext
 
             entity.HasOne(u => u.UserSeller)
                 .WithMany()
-                .HasForeignKey(u => u.SellerId);       
+                .HasForeignKey(u => u.SellerId);
         });
 
         modelBuilder.Entity<SaleCar>(entity =>
@@ -176,11 +176,11 @@ public class DevInCarDbContext : DbContext
 
             entity.HasOne<Car>(c => c.Car)
                 .WithMany(c => c.Sales)
-                .HasForeignKey(c => c.Id);                
+                .HasForeignKey(c => c.Id);
 
             entity.HasOne<Sale>(s => s.Sale)
                 .WithMany(c => c.Cars)
-                .HasForeignKey(s => s.Id);                
+                .HasForeignKey(s => s.Id);
 
         });
 
@@ -202,13 +202,13 @@ public class DevInCarDbContext : DbContext
 
             entity
                 .Property(d => d.DeliveryForecast);
-                
 
-            entity.HasOne<Address>(a=> a.Address)
+
+            entity.HasOne<Address>(a => a.Address)
                 .WithMany(d => d.Deliveries)
                 .HasForeignKey(a => a.AddressId);
-            
-            entity.HasOne<Sale>(s=> s.Sale)
+
+            entity.HasOne<Sale>(s => s.Sale)
                 .WithMany(d => d.Deliveries)
                 .HasForeignKey(s => s.SaleId);
 
