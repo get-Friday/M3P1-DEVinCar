@@ -7,7 +7,7 @@
         {
             _context = context;
         }
-        public IEnumerable<TEntity> Get(TEntity entity)
+        public IEnumerable<TEntity> Get()
         {
             return _context.Set<TEntity>();
         }
@@ -25,8 +25,9 @@
             _context.Set<TEntity>().Update(entity);
             _context.SaveChanges();
         }
-        public void Delete(TEntity entity)
+        public void Delete(TKey key)
         {
+            var entity = GetById(key);
             _context.Set<TEntity>().Remove(entity);
             _context.SaveChanges();
         }
