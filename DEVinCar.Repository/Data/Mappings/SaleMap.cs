@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace DEVinCar.Repository.Data.Mappings
 {
-    public class SaleMap : IEntityTypeConfiguration<Sale>
+    internal class SaleMap : IEntityTypeConfiguration<Sale>
     {
         public void Configure(EntityTypeBuilder<Sale> builder)
         {
