@@ -1,6 +1,6 @@
-using System.Runtime.Serialization;
-using DEVinCar.Controller.Models;
 using Microsoft.EntityFrameworkCore;
+using DEVinCar.Service.Models;
+using DEVinCar.Repository.Data.Mappings;
 
 namespace DEVinCar.Repository.Data;
 
@@ -37,44 +37,7 @@ public class DevInCarDbContext : DbContext
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         base.OnModelCreating(modelBuilder);
-
-        // Exemplo
-        // modelBuilder.Entity<XYZ>(entidade =>
-        // {
-        //     entidade.ToTable("[XYZ]s");
-
-        //     entidade.HasKey(a => a.Id);
-
-        //     entidade
-        //         .Property(a => a.[prop])
-        //         .HasMaxLength(120)
-        //         .IsRequired();
-
-        //     entidade
-        //         .HasData(new[]{
-        //             ...
-        //         });
-        // });
-
-        modelBuilder.Entity<City>(entity =>
-        {
-            entity.ToTable("Cities");
-            entity.HasKey(a => a.Id);
-            entity
-                .Property(a => a.Name)
-                .HasMaxLength(255)
-                .IsRequired();
-            entity
-                .Property(a => a.StateId)
-                .HasColumnType("int")
-                .IsRequired();
-            entity
-                .HasOne<State>(city => city.State)
-                .WithMany(s => s.Cities)
-                .HasForeignKey(city => city.StateId)
-                .IsRequired();
-
-        });
+        modelBuilder.ApplyConfiguration(new CityMap());
 
         modelBuilder.Entity<User>(entity =>
         {
