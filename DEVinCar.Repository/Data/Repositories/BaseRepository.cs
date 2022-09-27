@@ -25,9 +25,8 @@
             _context.Set<TEntity>().Update(entity);
             _context.SaveChanges();
         }
-        public void Delete(TKey key)
+        public void Delete(TEntity entity)
         {
-            var entity = GetById(key);
             _context.Set<TEntity>().Remove(entity);
             _context.SaveChanges();
         }
