@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using DEVinCar.Service.Models;
+using System.ComponentModel.DataAnnotations;
 
 namespace DEVinCar.Service.DTOs
 {
@@ -9,5 +10,16 @@ namespace DEVinCar.Service.DTOs
         [Required(ErrorMessage = "The BuyerId is required.")]
         public int BuyerId { get; set; }
         public int SellerId { get; internal set; }
+
+        public SaleDTO()
+        {
+        }
+        public SaleDTO(Sale sale)
+        {
+            Id = sale.Id;
+            SaleDate = sale.SaleDate;
+            BuyerId = sale.BuyerId;
+            SellerId = sale.SellerId;
+        }
     }
 }
