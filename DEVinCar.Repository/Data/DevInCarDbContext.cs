@@ -1,6 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using DEVinCar.Service.Models;
 using DEVinCar.Repository.Data.Mappings;
+using Microsoft.Extensions.Configuration;
 
 namespace DEVinCar.Repository.Data;
 
