@@ -1,4 +1,5 @@
 ﻿using DEVinCar.Service.DTOs;
+using DEVinCar.Service.ViewModels;
 
 namespace DEVinCar.Service.Interfaces.Services
 {
@@ -7,8 +8,8 @@ namespace DEVinCar.Service.Interfaces.Services
         IList<StateDTO> Get();
         void Post(StateDTO state);
         void PostAddress(AddressDTO address);
-        CityDTO GetCityById(int cityId);
-        StateDTO GetStateById(int stateId);
-        IEnumerable<CityDTO> GetCitiesByStateId(int stateId);
+        GetCityByIdViewModel GetCityById(int cityId);
+        GetStateViewModel GetStateById(int stateId);
+        IList<CityDTO> GetCitiesByStateId(int stateId);
     }
 }
