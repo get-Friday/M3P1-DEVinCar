@@ -41,36 +41,7 @@ public class DevInCarDbContext : DbContext
         modelBuilder.ApplyConfiguration(new UserMap());
         modelBuilder.ApplyConfiguration(new CarMap());
         modelBuilder.ApplyConfiguration(new SaleMap());
-        modelBuilder.Entity<SaleCar>(entity =>
-        {
-            entity.ToTable("SaleCars");
-            entity.HasKey(sc => sc.Id);
-            entity.Property(sc => sc.Id)
-                .HasColumnType("int");
-
-            entity.Property(sc => sc.SaleId)
-                .HasColumnType("int")
-                .IsRequired();
-
-            entity.Property(sc => sc.CarId)
-                .HasColumnType("int")
-                .IsRequired();
-
-            entity.Property(sc => sc.UnitPrice)
-                .HasPrecision(18, 2);
-
-            entity.Property(sc => sc.Amount)
-                .HasColumnType("int");
-
-            entity.HasOne<Car>(c => c.Car)
-                .WithMany(c => c.Sales)
-                .HasForeignKey(c => c.Id);
-
-            entity.HasOne<Sale>(s => s.Sale)
-                .WithMany(c => c.Cars)
-                .HasForeignKey(s => s.Id);
-
-        });
+        modelBuilder.ApplyConfiguration(new SaleCarMap());
 
         modelBuilder.Entity<Delivery>(entity =>
         {
