@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace DEVinCar.Repository.Data.Mappings
 {
-    public class CityMap : IEntityTypeConfiguration<City>
+    internal class CityMap : IEntityTypeConfiguration<City>
     {
         public void Configure(EntityTypeBuilder<City> builder)
         {
