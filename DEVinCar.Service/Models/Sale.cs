@@ -24,5 +24,12 @@ namespace DEVinCar.Service.Models
             BuyerId = sale.BuyerId;
             SellerId = sale.SellerId;
         }
+        public Sale(BuyDTO buy)
+        {
+            Id = buy.Id;
+            SaleDate = buy.SaleDate;
+            BuyerId = buy.BuyerId;
+            SellerId = buy.SellerId;
+        }
     }
 }
