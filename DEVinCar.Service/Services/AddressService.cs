@@ -2,6 +2,7 @@
 using DEVinCar.Service.Models;
 using DEVinCar.Service.Interfaces.Repositories;
 using DEVinCar.Service.Interfaces.Services;
+using DEVinCar.Service.ViewModels;
 
 namespace DEVinCar.Service.Services
 {
@@ -13,20 +14,36 @@ namespace DEVinCar.Service.Services
         {
             _addressRepository = addressRepository;
         }
-        public IList<AddressDTO> Get()
+        public IList<AddressViewModel> Get()
         {
             return _addressRepository
-                .Get()
-                .Select(a => new AddressDTO(a))
+                .GetWithCity()
+                .Select(a => new AddressViewModel(
+                    a.Id,
+                    a.Street,
+                    a.CityId,
+                    a.City.Name,
+                    a.Number,
+                    a.Complement,
+                    a.Cep
+                    ))
                 .ToList();
         }
-        public void Alter(AddressDTO address)
+        // TODO
+        // Verificar se pelo menos um campo esta sendo alterado
+        // Converter patchDTO pra addressDTO
+        public void Alter(AddressPatchDTO addressPatch)
         {
-            _addressRepository.Alter(new Address(address));
+            throw new NotImplementedException();
+            //_addressRepository.Alter(new Address(address));
         }
-        public void Delete(AddressDTO address)
+        // TODO
+        // Verifica se address não existe retorna NotFound
+        // Verifica se existe uma relação do endereço com uma entrega em context.deliveries
+        public void Delete(int id)
         {
-            _addressRepository.Delete(new Address(address));
+            Address address = _addressRepository.GetById(id);
+            _addressRepository.Delete(address);
         }
     }
 }
