@@ -9,9 +9,9 @@ namespace DEVinCar.Repository.Data.Repositories
         public AddressRepository(DevInCarDbContext context) : base(context)
         {
         }
-        public IEnumerable<Address> GetWithCity()
+        public IQueryable<Address> GetIncludeCity()
         {
-            return _context.Addresses.Include(a => a.City);
+            return _context.Addresses.Include(a => a.City).AsQueryable();
         }
     }
 }
