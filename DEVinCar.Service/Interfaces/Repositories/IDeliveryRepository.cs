@@ -4,6 +4,6 @@ namespace DEVinCar.Service.Interfaces.Repositories
 {
     internal interface IDeliveryRepository
     {
-        IEnumerable<Delivery> Get();
+        IQueryable<Delivery> Get();
     }
 }
