@@ -32,21 +32,35 @@ namespace DEVinCar.Service.Services
                 })
                 .ToList();
         }
+        // TODO
+        // Verificar se saleCar.CarId e saleCar.SaleId não existe no repository retornar NotFound
+        // Verificar se saleCar.CarId == 0 retornar BadRequest
+        // Verificar se saleCar.UnitPrice <= 0 || saleCar.Amount <= 0 retornar BadRequest
         public void PostSale(SaleCarDTO saleCar)
         {
             _saleRepository.PostSale(new SaleCar(saleCar));
         }
+        // TODO
+        // Verificar se delivery.saleId não existe retornar NotFound
+        // Verificar se delivery.AddressId não existe retornar NotFound
+        // Verificar se DateTime.Now.Date menor que delivery.DeliveryForecast retornar badRequest
         public void PostDelivery(DeliveryDTO delivery)
         {
             _saleRepository.PostDelivery(new Delivery(delivery));
         }
-        public void AlterCarAmount(SaleCarDTO salesCar)
+        public void Alter(SaleCarDTO salesCar)
         {
-            _saleRepository.AlterCarAmount(new SaleCar(salesCar));
+            _saleRepository.Alter(new SaleCar(salesCar));
         }
-        public void AlterUnitPrice(SaleCarDTO salesCar)
+        public decimal GetSuggestedPrice(int carId)
         {
-            _saleRepository.AlterUnitPrice(new SaleCar(salesCar));
+            return _saleRepository.GetSuggestedPrice(carId);
+        }
+        // TODO 
+        // Verificar se existe sale com o id passado
+        public SaleCarDTO GetSoldCar(int saleId)
+        {
+            return new SaleCarDTO(_saleRepository.GetSoldCar(saleId));
         }
     }
 }
