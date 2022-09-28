@@ -52,6 +52,34 @@ namespace DEVinCar.Service.Services
         {
             _saleRepository.Alter(new SaleCar(salesCar));
         }
+        public IList<SaleDTO> GetSalesByUserId(int userId)
+        {
+            return _saleRepository.GetSalesByUserId(userId)
+                .Select(s => new SaleDTO(s))
+                .ToList();
+        }
+        public IList<SaleDTO> GetSalesBySellerId(int userId)
+        {
+            return _saleRepository.GetSalesBySellerId(userId)
+                .Select(s => new SaleDTO(s))
+                .ToList();
+        }
+        // TODO
+        // Verificar se sale.BuyerId = 0 retornar BadRequest
+        // Verificar se sale.SellerId em User não existe retornar NotFound
+        // Verificar se sale.BuyerId em User não existe retornar NotFound
+        public void PostSaleUserId(SaleDTO sale)
+        {
+
+            _saleRepository.PostSaleUserId(new Sale(sale));
+        }
+        // TODO
+        // Verificar se buy.BuyerId em User não existe retornar NotFound
+        // Verificar se buy.SellerId em User não existe retornar NotFound
+        public void PostBuyUserId(BuyDTO buy)
+        {
+            _saleRepository.PostBuyUserId(new Sale(buy));
+        }
         public decimal GetSuggestedPrice(int carId)
         {
             return _saleRepository.GetSuggestedPrice(carId);
