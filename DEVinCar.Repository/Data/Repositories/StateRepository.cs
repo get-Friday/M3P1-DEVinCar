@@ -8,6 +8,15 @@ namespace DEVinCar.Repository.Data.Repositories
         public StateRepository(DevInCarDbContext context) : base(context)
         {
         }
+        public IEnumerable<State> GetByName(string name)
+        {
+            return _context.States.Where(s => s.Name.ToUpper().Contains(name.ToUpper()));
+        }
+        public void PostCity(City city)
+        {
+            _context.Cities.Add(city);
+            _context.SaveChanges();
+        }
         public void PostAddress(Address address)
         {
             _context.Addresses.Add(address);
