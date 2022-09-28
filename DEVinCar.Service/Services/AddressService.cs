@@ -14,11 +14,27 @@ namespace DEVinCar.Service.Services
         {
             _addressRepository = addressRepository;
         }
-        public IList<AddressViewModel> Get()
+        public IList<AddressViewModel> Get(int? cityId, int? stateId, string? street, string? cep)
         {
-            return _addressRepository
-                .GetWithCity()
-                .Select(a => new AddressViewModel(
+            var query = _addressRepository.GetIncludeCity();
+
+            if (cityId.HasValue)
+                query = query.Where(a => a.CityId == cityId);
+
+            if (stateId.HasValue)
+                query = query.Where(a => a.City.StateId == stateId);
+
+            if (!string.IsNullOrEmpty(street))
+                query = query.Where(a => a.Street.ToUpper().Contains(street.ToUpper()));
+
+            if (!string.IsNullOrEmpty(cep))
+                query = query.Where(a => a.Cep == cep);
+
+            if (!query.ToList().Any())
+                throw new Exception();
+
+
+            return query.Select(a => new AddressViewModel(
                     a.Id,
                     a.Street,
                     a.CityId,
@@ -26,8 +42,7 @@ namespace DEVinCar.Service.Services
                     a.Number,
                     a.Complement,
                     a.Cep
-                    ))
-                .ToList();
+                )).ToList();
         }
         // TODO
         // Verificar se pelo menos um campo esta sendo alterado

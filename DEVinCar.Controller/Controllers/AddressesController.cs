@@ -25,24 +25,7 @@ public class AddressesController : ControllerBase
         [FromQuery] string cep
     )
     {
-        var query = _addressService.Get().AsQueryable();
-
-        if (cityId.HasValue)
-            query = query.Where(a => a.CityId == cityId);
-        
-        // if (stateId.HasValue)
-        //     query = query.Where(a => a.City.StateId == stateId);
-
-        if (!string.IsNullOrEmpty(street))
-            query = query.Where(a => a.Street.ToUpper().Contains(street.ToUpper()));
-
-        if (!string.IsNullOrEmpty(cep))
-            query = query.Where(a => a.Cep == cep);
-
-        if (!query.ToList().Any())
-            return NoContent();
-
-        return Ok(query);
+        return Ok(_addressService.Get(cityId, stateId, street, cep));
     }
 
     [HttpPatch("{addressId}")]
