@@ -4,6 +4,6 @@ namespace DEVinCar.Service.Interfaces.Services
 {
     public interface IDeliveryService
     {
-        IList<DeliveryDTO> Get();
+        IList<DeliveryDTO> Get(int? addressId, int? saleId);
     }
 }
