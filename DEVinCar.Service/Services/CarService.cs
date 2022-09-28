@@ -24,17 +24,28 @@ namespace DEVinCar.Service.Services
         {
             return new CarDTO(_carRepository.GetById(id));
         }
+        // TODO
+        // Verificar se já existe um carro com esse nome return badRequest
+        // Verificar se o SuggestedPrice <= 0 return badRequest
         public void Post(CarDTO car)
         {
             _carRepository.Post(new Car(car));
         }
+        // TODO
+        // Verificar se carro existe se não retornar NotFound
+        // Verificar se carDto.Name.Equals(null) || carDto.SuggestedPrice.Equals(null) return BadRequest
+        // Verificar se carDto.SuggestedPrice <= 0 return BadRequest
+        // Verificar se nome do carro a editar já existe: Cars.Any(c => c.Name == carDto.Name && c.Id != carId) return BadRequest
         public void Alter(CarDTO car)
         {
             _carRepository.Alter(new Car(car));
         }
-        public void Delete(CarDTO car)
+        // TODO
+        // Verificar se o carro já está vendido retornar badRequest
+        public void Delete(int carId)
         {
-            _carRepository.Delete(new Car(car));
+            Car car = _carRepository.GetById(carId);
+            _carRepository.Delete(car);
         }
     }
 }
