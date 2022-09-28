@@ -6,7 +6,7 @@ namespace DEVinCar.Service.DTOs
     public class AddressDTO
     {
         public int Id { get; internal set; }
-        public int CityId { get; internal set; }
+        public int CityId { get; set; }
         [Required(ErrorMessage = "The Street is required")]
         [MaxLength(150, ErrorMessage = "Street name must be a maximum of 100 characters")]
         public string Street { get; set; }
