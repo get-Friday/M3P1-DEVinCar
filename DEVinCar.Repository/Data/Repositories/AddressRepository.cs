@@ -1,5 +1,6 @@
 ﻿using DEVinCar.Service.Interfaces.Repositories;
 using DEVinCar.Service.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace DEVinCar.Repository.Data.Repositories
 {
@@ -7,6 +8,10 @@ namespace DEVinCar.Repository.Data.Repositories
     {
         public AddressRepository(DevInCarDbContext context) : base(context)
         {
+        }
+        public IEnumerable<Address> GetWithCity()
+        {
+            return _context.Addresses.Include(a => a.City);
         }
     }
 }
