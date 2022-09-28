@@ -8,7 +8,8 @@ namespace DEVinCar.Service.Interfaces.Services
         IList<SaleViewModel> GetItemsSale(int saleId);
         void PostSale(SaleCarDTO saleCar);
         void PostDelivery(DeliveryDTO delivery);
-        void AlterCarAmount(SaleCarDTO salesCar);
-        void AlterUnitPrice(SaleCarDTO salesCar);
+        void Alter(SaleCarDTO salesCar);
+        decimal GetSuggestedPrice(int carId);
+        SaleCarDTO GetSoldCar(int carId);
     }
 }
