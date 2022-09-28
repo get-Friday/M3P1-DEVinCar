@@ -15,7 +15,7 @@ namespace DEVinCar.Service.DTOs
         [MaxLength(50)]
         [MinLength(4, ErrorMessage = "The password must contain at least 4 digits")]
         [DistinctCharacters]
-        public string Password { get; set; }
+        public string Password { internal get; set; }
         [Required(ErrorMessage = "The name is required")]
         [MaxLength(255)]
         public string Name { get; set; }
