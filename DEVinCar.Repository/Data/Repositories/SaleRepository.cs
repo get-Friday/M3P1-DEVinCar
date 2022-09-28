@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace DEVinCar.Repository.Data.Repositories
 {
-    public class SaleRepository : BaseRepository<Sale, int>, ISaleRepository
+    public class SaleRepository : BaseRepository<SaleCar, int>, ISaleRepository
     {
         public SaleRepository(DevInCarDbContext context) : base(context)
         {
@@ -27,15 +27,13 @@ namespace DEVinCar.Repository.Data.Repositories
             _context.Deliveries.Add(delivery);
             _context.SaveChanges();
         }
-        public void AlterCarAmount(SaleCar salesCar)
+        public decimal GetSuggestedPrice(int carId)
         {
-            _context.SaleCars.Update(salesCar);
-            _context.SaveChanges();
+            return _context.Cars.Find(carId).SuggestedPrice;
         }
-        public void AlterUnitPrice(SaleCar salesCar)
+        public SaleCar GetSoldCar(int saleId)
         {
-            _context.SaleCars.Update(salesCar);
-            _context.SaveChanges();
+            return _context.SaleCars.Find(saleId);
         }
     }
 }
