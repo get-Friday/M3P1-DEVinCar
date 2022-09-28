@@ -12,12 +12,21 @@ namespace DEVinCar.Service.Services
         {
             _DeliveryRepository = deliveryRepository;
         }
-        public IList<DeliveryDTO> Get()
+        public IList<DeliveryDTO> Get(int? addressId, int? saleId)
         {
-            return _DeliveryRepository
-                .Get()
-                .Select(d => new DeliveryDTO(d))
-                .ToList();
+            var query = _DeliveryRepository.Get()
+                .Select(d => new DeliveryDTO(d));
+
+            if (addressId.HasValue)
+                query = query.Where(d => d.AddressId == addressId);
+
+            if (saleId.HasValue)
+                query = query.Where(d => d.SaleId == saleId);
+
+            if (!query.ToList().Any())
+                throw new Exception();
+
+            return query.ToList();
         }
     }
 }

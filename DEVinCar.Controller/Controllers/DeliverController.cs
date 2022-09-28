@@ -16,22 +16,11 @@ namespace DEVinCar.Controller.Controllers
 
         [HttpGet]
         public ActionResult<DeliveryDTO> Get(
-        [FromQuery] int? addressId,
-        [FromQuery] int? saleId)
+            [FromQuery] int? addressId,
+            [FromQuery] int? saleId
+        )
         {
-            var query = _deliveryService.Get().AsQueryable();
-
-            if (addressId.HasValue)
-                query = query.Where(d => d.AddressId == addressId);
-
-            if (saleId.HasValue)
-                query = query.Where(d => d.SaleId == saleId);
-                      
-            if (!query.ToList().Any())
-                return NoContent();
-
-            return Ok(query);
-       
+            return Ok(_deliveryService.Get(addressId, saleId));
         }
     }
 }
