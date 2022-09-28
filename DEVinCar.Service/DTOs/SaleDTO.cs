@@ -9,7 +9,7 @@ namespace DEVinCar.Service.DTOs
         public DateTime SaleDate { get; set; }
         [Required(ErrorMessage = "The BuyerId is required.")]
         public int BuyerId { get; set; }
-        public int SellerId { get; internal set; }
+        public int SellerId { get; set; }
 
         public SaleDTO()
         {
