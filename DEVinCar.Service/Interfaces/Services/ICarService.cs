@@ -8,6 +8,6 @@ namespace DEVinCar.Service.Interfaces.Services
         CarDTO GetById(int id);
         void Post(CarDTO car);
         void Alter(CarDTO car);
-        void Delete(CarDTO car);
+        void Delete(int carId);
     }
 }
