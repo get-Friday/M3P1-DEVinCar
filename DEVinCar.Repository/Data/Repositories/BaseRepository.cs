@@ -7,9 +7,9 @@
         {
             _context = context;
         }
-        public IEnumerable<TEntity> Get()
+        public IQueryable<TEntity> Get()
         {
-            return _context.Set<TEntity>();
+            return _context.Set<TEntity>().AsQueryable();
         }
         public TEntity GetById(TKey key)
         {
