@@ -7,8 +7,8 @@ namespace DEVinCar.Service.Interfaces.Repositories
         IEnumerable<Sale> GetItemsSale(int saleId);
         void PostSale(SaleCar saleCar);
         void PostDelivery(Delivery delivery);
-        void AlterCarAmount(SaleCar salesCar);
-        void AlterUnitPrice(SaleCar salesCar);
-
+        void Alter(SaleCar salesCar);
+        decimal GetSuggestedPrice(int carId);
+        SaleCar GetSoldCar(int carId);
     }
 }
