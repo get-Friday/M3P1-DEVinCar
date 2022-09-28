@@ -30,24 +30,7 @@ public class CarController : ControllerBase
         [FromQuery] decimal? priceMax
     )
     {
-        var query = _carService.Get().AsQueryable();
-
-        if (!string.IsNullOrEmpty(name))
-            query = query.Where(c => c.Name.ToUpper().Contains(name.ToUpper()));
-        
-        if (priceMin > priceMax)
-            return BadRequest();
-        
-        if (priceMin.HasValue)
-            query = query.Where(c => c.SuggestedPrice >= priceMin);
-        
-        if (priceMax.HasValue)
-            query = query.Where(c => c.SuggestedPrice <= priceMax);
-        
-        if (!query.ToList().Any())
-            return NoContent();
-        
-        return Ok(query.ToList());
+        return Ok(_carService.Get(name, priceMin, priceMax));
     }
 
     [HttpPost]

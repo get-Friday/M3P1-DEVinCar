@@ -2,6 +2,7 @@
 using DEVinCar.Service.Interfaces.Repositories;
 using DEVinCar.Service.Interfaces.Services;
 using DEVinCar.Service.Models;
+using System.Xml.Linq;
 
 namespace DEVinCar.Service.Services
 {
@@ -13,12 +14,28 @@ namespace DEVinCar.Service.Services
         {
             _carRepository = carRepository;
         }
-        public IList<CarDTO> Get()
+        public IList<CarDTO> Get(string? name, decimal? priceMin, decimal? priceMax)
         {
-            return _carRepository
+            var query = _carRepository
                 .Get()
-                .Select(c => new CarDTO(c))
-                .ToList();
+                .Select(c => new CarDTO(c));
+
+            if (!string.IsNullOrEmpty(name))
+                query = query.Where(c => c.Name.ToUpper().Contains(name.ToUpper()));
+
+            if (priceMin > priceMax)
+                throw new Exception(); //BadRequest()
+
+            if (priceMin.HasValue)
+                query = query.Where(c => c.SuggestedPrice >= priceMin);
+
+            if (priceMax.HasValue)
+                query = query.Where(c => c.SuggestedPrice <= priceMax);
+
+            if (!query.ToList().Any())
+                throw new Exception(); //NoContent()
+
+            return query.ToList();
         }
         public CarDTO GetById(int id)
         {
