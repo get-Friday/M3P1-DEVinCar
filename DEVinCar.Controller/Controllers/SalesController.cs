@@ -78,5 +78,43 @@ public class SalesController : ControllerBase
         return NoContent();
     }
 
-}
+    [HttpGet]
+    [Route("api/user/{userId}/buy")]
+    public ActionResult<SaleDTO> GetSalesByUserId(
+       [FromRoute] int userId
+    )
+    {
+        return Ok(_saleService.GetSalesByUserId(userId));
+    }
 
+    [HttpGet]
+    [Route("api/user/{userId}/sales")]
+    public ActionResult<SaleDTO> GetSalesBySellerId(
+       [FromRoute] int userId)
+    {
+        return Ok(_saleService.GetSalesBySellerId(userId));
+    }
+
+    [HttpPost]
+    [Route("api/user/{userId}/sales")]
+    public ActionResult<SaleDTO> PostSaleUserId(
+           [FromRoute] int userId,
+           [FromBody] SaleDTO body)
+    {
+        body.SellerId = userId;
+        _saleService.PostSaleUserId(body);
+        return Created("api/user/{userId}/sales", body.Id);
+
+    }
+
+    [HttpPost]
+    [Route("api/user/{userId}/buy")]
+    public ActionResult<SaleDTO> PostBuyUserId(
+            [FromRoute] int userId,
+            [FromBody] BuyDTO body)
+    {
+        body.BuyerId = userId;
+        _saleService.PostBuyUserId(body);
+        return Created("api/user/{userId}/buy", body.Id);
+    }
+}

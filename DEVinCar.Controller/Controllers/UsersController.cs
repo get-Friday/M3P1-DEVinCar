@@ -47,30 +47,9 @@ public class UserController : ControllerBase
     {
         return Ok(_userService.GetById(id));
     }
-
-    // TODO
-    // Mover para SaleController
-    [HttpGet("{userId}/buy")]
-    public ActionResult<SaleDTO> GetSalesByUserId(
-       [FromRoute] int userId)
-
-    {
-        return Ok(_userService.GetSalesByUserId(userId));
-    }
-
-    // TODO
-    // Mover para SaleController
-    [HttpGet("{userId}/sales")]
-    public ActionResult<SaleDTO> GetSalesBySellerId(
-       [FromRoute] int userId)
-    {
-        return Ok(_userService.GetSalesBySellerId(userId));
-    }
-
-    // TODO
-    // Mover para SaleController
+    
     [HttpPost]
-    public ActionResult<UserDTO> Post(
+    public ActionResult Post(
         [FromBody] UserDTO userDto
     )
     {
@@ -78,31 +57,6 @@ public class UserController : ControllerBase
         return Created("api/user", userDto.Id);
     }
 
-    // TODO
-    // Mover para SaleController
-    [HttpPost("{userId}/sales")]
-    public ActionResult<SaleDTO> PostSaleUserId(
-           [FromRoute] int userId,
-           [FromBody] SaleDTO body)
-    {
-        body.SellerId = userId;
-        _userService.PostSaleUserId(body);
-        return Created("api/sale", body.Id);
-
-    }
-
-    // TODO
-    // Mover para SaleController
-    [HttpPost("{userId}/buy")]
-    public ActionResult<SaleDTO> PostBuyUserId(
-            [FromRoute] int userId,
-            [FromBody] BuyDTO body)
-    {
-        body.BuyerId = userId;
-        _userService.PostBuyUserId(body);
-        return Created("api/user/{userId}/buy", body.Id);
-    }
-      
     [HttpDelete("{userId}")]
     public ActionResult Delete(
         [FromRoute] int userId
@@ -111,11 +65,4 @@ public class UserController : ControllerBase
         _userService.Delete(userId);
         return NoContent();
     }
-
-
 }
-
-
-
-
-
