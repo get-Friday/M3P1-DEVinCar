@@ -6,11 +6,7 @@ namespace DEVinCar.Service.Interfaces.Repositories
     {
         IEnumerable<User> Get();
         User GetById(int id);
-        IEnumerable<Sale> GetSalesByUserId(int userId);
-        IEnumerable<Sale> GetSalesBySellerId(int userId);
         void Post(User user);
-        void PostSaleUserId(Sale sale);
-        void PostBuyUserId(Sale buy);
         void Delete(User user);
     }
 }
