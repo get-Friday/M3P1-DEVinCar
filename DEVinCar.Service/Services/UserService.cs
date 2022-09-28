@@ -23,12 +23,16 @@ namespace DEVinCar.Service.Services
         {
             return new UserDTO(_userRepository.GetById(id));
         }
+        // TODO
+        // Mover para SaleService
         public IList<SaleDTO> GetSalesByUserId(int userId)
         {
             return _userRepository.GetSalesByUserId(userId)
                 .Select(s => new SaleDTO(s))
                 .ToList();
         }
+        // TODO
+        // Mover para SaleService
         public IList<SaleDTO> GetSalesBySellerId(int userId)
         {
             return _userRepository.GetSalesBySellerId(userId)
@@ -39,17 +43,28 @@ namespace DEVinCar.Service.Services
         {
             _userRepository.Post(new User(user));
         }
+        // TODO
+        // Verificar se sale.BuyerId = 0 retornar BadRequest
+        // Verificar se sale.SellerId em User não existe retornar NotFound
+        // Verificar se sale.BuyerId em User não existe retornar NotFound
+        // Mover para SaleService
         public void PostSaleUserId(SaleDTO sale)
         {
+
             _userRepository.PostSaleUserId(new Sale(sale));
         }
-        public void PostBuyUserId(SaleDTO buy)
+        // TODO
+        // Verificar se buy.BuyerId em User não existe retornar NotFound
+        // Verificar se buy.SellerId em User não existe retornar NotFound
+        // Mover para SaleService
+        public void PostBuyUserId(BuyDTO buy)
         {
             _userRepository.PostBuyUserId(new Sale(buy));
         }
-        public void Delete(UserDTO user)
+        public void Delete(int userId)
         {
-            _userRepository.Delete(new User(user));
+            User user = _userRepository.GetById(userId);
+            _userRepository.Delete(user);
         }
     }
 }
