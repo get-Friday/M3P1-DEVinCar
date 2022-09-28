@@ -26,7 +26,7 @@ public class UserController : ControllerBase
         var query = _userService.Get().AsQueryable();
 
         if (!string.IsNullOrEmpty(Name))
-            query = query.Where(c => c.Name.Contains(Name));
+            query = query.Where(c => c.Name.ToUpper().Contains(Name.ToUpper()));
 
         if (birthDateMin.HasValue)
             query = query.Where(c => c.BirthDate >= birthDateMin.Value);
