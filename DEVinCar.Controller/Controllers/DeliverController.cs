@@ -1,9 +1,6 @@
-﻿using DEVinCar.Controller.Models;
-using DEVinCar.Controller.Data;
-using DEVinCar.Controller.DTOs;
+﻿using DEVinCar.Service.DTOs;
+using DEVinCar.Service.Interfaces.Services;
 using Microsoft.AspNetCore.Mvc;
-using System.IO;
-using System.Runtime.ConstrainedExecution;
 
 namespace DEVinCar.Controller.Controllers
 {
@@ -11,35 +8,29 @@ namespace DEVinCar.Controller.Controllers
     [Route("api/deliver")]
     public class DeliverController : ControllerBase
     {
-        private readonly DevInCarDbContext _context;
-        public DeliverController(DevInCarDbContext context)
+        private readonly IDeliveryService _deliveryService;
+        public DeliverController(IDeliveryService deliveryService)
         {
-            _context = context;
+            _deliveryService = deliveryService;
         }
 
         [HttpGet]
-        public ActionResult<Delivery> Get(
+        public ActionResult<DeliveryDTO> Get(
         [FromQuery] int? addressId,
         [FromQuery] int? saleId)
         {
-            var query = _context.Deliveries.AsQueryable();
+            var query = _deliveryService.Get().AsQueryable();
 
             if (addressId.HasValue)
-            {
-                query = query.Where(a => a.AddressId == addressId);
-            }
+                query = query.Where(d => d.AddressId == addressId);
 
             if (saleId.HasValue)
-            {
-                query = query.Where(s => s.SaleId == saleId);
-            }
+                query = query.Where(d => d.SaleId == saleId);
                       
             if (!query.ToList().Any())
-            {
                 return NoContent();
-            }
 
-            return Ok(query.ToList());
+            return Ok(query);
        
         }
     }
