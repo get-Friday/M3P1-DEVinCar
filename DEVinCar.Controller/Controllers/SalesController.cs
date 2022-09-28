@@ -33,7 +33,7 @@ public class SalesController : ControllerBase
         body.UnitPrice ??= _saleService.GetSuggestedPrice(body.CarId);
         body.Amount ??= 1;
         _saleService.PostSale(body);
-        return Created("api/sales/{saleId}/item", body.CarId);
+        return Created($"api/sales/{saleId}/item", body.CarId);
     }
 
     [HttpPost("{saleId}/deliver")]
@@ -47,7 +47,7 @@ public class SalesController : ControllerBase
             body.DeliveryForecast = DateTime.Now.AddDays(7);
 
         _saleService.PostDelivery(body);
-        return Created("{saleId}/deliver", body.Id);
+        return Created($"{saleId}/deliver", body.Id);
     }
 
     [HttpPatch("{saleId}/car/{carId}/amount/{amount}")]
@@ -103,7 +103,7 @@ public class SalesController : ControllerBase
     {
         body.SellerId = userId;
         _saleService.PostSaleUserId(body);
-        return Created("api/user/{userId}/sales", body.Id);
+        return Created($"api/user/{userId}/sales", body.Id);
 
     }
 
@@ -115,6 +115,6 @@ public class SalesController : ControllerBase
     {
         body.BuyerId = userId;
         _saleService.PostBuyUserId(body);
-        return Created("api/user/{userId}/buy", body.Id);
+        return Created($"api/user/{userId}/buy", body.Id);
     }
 }
