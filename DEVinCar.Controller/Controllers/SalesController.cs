@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace DEVinCar.Controller.Controllers;
 
 [ApiController]
-[Route("api/[controller]")]
+[Route("api/sale")]
 public class SalesController : ControllerBase
 {
     private readonly ISaleService _saleService;
