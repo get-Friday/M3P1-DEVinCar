@@ -10,7 +10,7 @@ namespace DEVinCar.Service.Interfaces.Services
         IList<SaleDTO> GetSalesBySellerId(int userId);
         void Post(UserDTO user);
         void PostSaleUserId(SaleDTO sale);
-        void PostBuyUserId(SaleDTO buy);
-        void Delete(UserDTO user);
+        void PostBuyUserId(BuyDTO buy);
+        void Delete(int userId);
     }
 }
