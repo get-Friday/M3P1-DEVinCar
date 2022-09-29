@@ -9,6 +9,6 @@ namespace DEVinCar.Service.Interfaces.Repositories
         void Post(Car car);
         void Alter(Car car);
         void Delete(Car car);
-        bool HasBeenSold(int carId);
+        decimal GetSuggestedPrice(int carId);
     }
 }
