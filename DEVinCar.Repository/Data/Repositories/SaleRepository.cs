@@ -17,11 +17,6 @@ namespace DEVinCar.Repository.Data.Repositories
                 .Include(s => s.UserSeller)
                 .Where(s => s.Id == saleId);
         }
-        public void PostSale(SaleCar saleCar)
-        {
-            _context.SaleCars.Add(saleCar);
-            _context.SaveChanges();
-        }
         public void PostDelivery(Delivery delivery)
         {
             _context.Deliveries.Add(delivery);
@@ -44,14 +39,6 @@ namespace DEVinCar.Repository.Data.Repositories
         {
             _context.Sales.Add(buy);
             _context.SaveChanges();
-        }
-        public decimal GetSuggestedPrice(int carId)
-        {
-            return _context.Cars.Find(carId).SuggestedPrice;
-        }
-        public SaleCar GetSoldCar(int saleId)
-        {
-            return _context.SaleCars.Find(saleId);
         }
     }
 }
