@@ -30,9 +30,9 @@ namespace DEVinCar.Repository.Data.Repositories
         {
             return _context.States.Find(stateId);
         }
-        public IEnumerable<City> GetCitiesByStateId(int stateId)
+        public IQueryable<City> GetCitiesByStateId(int stateId)
         {
-            return _context.Cities.Where(c => c.StateId == stateId);
+            return _context.Cities.Where(c => c.StateId == stateId).AsQueryable();
         }
     }
 }
