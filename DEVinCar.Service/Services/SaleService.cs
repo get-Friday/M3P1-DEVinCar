@@ -8,11 +8,22 @@ namespace DEVinCar.Service.Services
 {
     internal class SaleService : ISaleService
     {
+        private readonly ICarRepository _carRepository;
         private readonly ISaleRepository _saleRepository;
+        private readonly ISaleCarRepository _saleCarRepository;
+        private readonly IDeliveryRepository _deliveryRepository;
 
-        public SaleService(ISaleRepository saleRepository)
+        public SaleService(
+            ISaleRepository saleRepository, 
+            ISaleCarRepository saleCarRepository,
+            ICarRepository carRepository,
+            IDeliveryRepository deliveryRepository
+        )
         {
             _saleRepository = saleRepository;
+            _saleCarRepository = saleCarRepository;
+            _carRepository = carRepository;
+            _deliveryRepository = deliveryRepository;
         }
         public IList<SaleViewModel> GetItemsSale(int saleId)
         {
@@ -38,7 +49,7 @@ namespace DEVinCar.Service.Services
         // Verificar se saleCar.UnitPrice <= 0 || saleCar.Amount <= 0 retornar BadRequest
         public void PostSale(SaleCarDTO saleCar)
         {
-            _saleRepository.PostSale(new SaleCar(saleCar));
+            _saleCarRepository.Post(new SaleCar(saleCar));
         }
         // TODO
         // Verificar se delivery.saleId não existe retornar NotFound
@@ -46,11 +57,11 @@ namespace DEVinCar.Service.Services
         // Verificar se DateTime.Now.Date menor que delivery.DeliveryForecast retornar badRequest
         public void PostDelivery(DeliveryDTO delivery)
         {
-            _saleRepository.PostDelivery(new Delivery(delivery));
+            _deliveryRepository.Post(new Delivery(delivery));
         }
         public void Alter(SaleCarDTO salesCar)
         {
-            _saleRepository.Alter(new SaleCar(salesCar));
+            _saleCarRepository.Alter(new SaleCar(salesCar));
         }
         public IList<SaleDTO> GetSalesByUserId(int userId)
         {
@@ -82,13 +93,18 @@ namespace DEVinCar.Service.Services
         }
         public decimal GetSuggestedPrice(int carId)
         {
-            return _saleRepository.GetSuggestedPrice(carId);
+            return _carRepository.GetSuggestedPrice(carId);
         }
         // TODO 
         // Verificar se existe sale com o id passado
         public SaleCarDTO GetSoldCar(int saleId)
         {
-            return new SaleCarDTO(_saleRepository.GetSoldCar(saleId));
+            return new SaleCarDTO(_saleCarRepository.GetSoldCar(saleId));
+        }
+
+        private bool SoldCarNotFound(int carId, int saleId)
+        {
+
         }
     }
 }
