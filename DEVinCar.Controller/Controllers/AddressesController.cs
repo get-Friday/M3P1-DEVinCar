@@ -34,6 +34,7 @@ public class AddressesController : ControllerBase
         [FromBody] AddressPatchDTO addressPatchDTO
     )
     {
+        addressPatchDTO.Id = addressId;
         _addressService.Alter(addressPatchDTO);
         return NoContent();
     }
