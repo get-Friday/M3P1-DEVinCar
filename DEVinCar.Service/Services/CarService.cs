@@ -2,17 +2,18 @@
 using DEVinCar.Service.Interfaces.Repositories;
 using DEVinCar.Service.Interfaces.Services;
 using DEVinCar.Service.Models;
-using System.Xml.Linq;
 
 namespace DEVinCar.Service.Services
 {
     internal class CarService : ICarService
     {
         private readonly ICarRepository _carRepository;
+        private readonly ISaleCarRepository _saleCarRepository;
 
-        public CarService(ICarRepository carRepository)
+        public CarService(ICarRepository carRepository, ISaleCarRepository saleCarRepository)
         {
             _carRepository = carRepository;
+            _saleCarRepository = saleCarRepository;
         }
         public IList<CarDTO> Get(string? name, decimal? priceMin, decimal? priceMax)
         {
@@ -77,7 +78,7 @@ namespace DEVinCar.Service.Services
             if (CarNotFound(carId))
                 throw new Exception(); // Car not found
 
-            if (_carRepository.HasBeenSold(carId))
+            if (_saleCarRepository.HasBeenSold(carId))
                 throw new Exception(); // Cannot delete sold car
 
             Car car = _carRepository.GetById(carId);
