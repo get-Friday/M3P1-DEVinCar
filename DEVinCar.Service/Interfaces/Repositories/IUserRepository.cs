@@ -4,7 +4,7 @@ namespace DEVinCar.Service.Interfaces.Repositories
 {
     internal interface IUserRepository
     {
-        IEnumerable<User> Get();
+        IQueryable<User> Get();
         User GetById(int id);
         void Post(User user);
         void Delete(User user);
