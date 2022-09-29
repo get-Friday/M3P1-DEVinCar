@@ -44,19 +44,43 @@ namespace DEVinCar.Service.Services
                     a.Cep
                 )).ToList();
         }
-        // TODO
-        // Verificar se pelo menos um campo esta sendo alterado
         public void Alter(AddressPatchDTO addressPatch)
         {
+            if (AddressNotFound(addressPatch.Id))
+                throw new Exception(); // Address {Id} not found
+
+            if (AllFieldsEmpty(addressPatch))
+                throw new Exception(); // Must have at least one field
+
+            if (!addressPatch.Cep.All(char.IsDigit))
+                throw new Exception(); // Every characters in cep must be numeric
+
             _addressRepository.Alter(new Address(addressPatch));
         }
-        // TODO
-        // Verifica se address não existe retorna NotFound
-        // Verifica se existe uma relação do endereço com uma entrega em context.deliveries
         public void Delete(int id)
         {
+            if (AddressNotFound(id))
+                throw new Exception(); // Address {Id} not found
+
+            if (_addressRepository.HasDeliveryRelated(id))
+                throw new Exception(); // Cannot delete address {Id} because it is related to Delivery
+
             Address address = _addressRepository.GetById(id);
             _addressRepository.Delete(address);
+        }
+
+        private static bool AllFieldsEmpty(AddressPatchDTO address)
+        {
+            return (
+                String.IsNullOrEmpty(address.Street) &&
+                String.IsNullOrEmpty(address.Cep) &&
+                String.IsNullOrEmpty(address.Complement)
+            );
+        }
+
+        private bool AddressNotFound(int id)
+        {
+            return _addressRepository.GetById(id) == null;
         }
     }
 }
