@@ -63,10 +63,7 @@ public class StatesController : ControllerBase
         [FromQuery] string name
     ) 
     {
-        if (!string.IsNullOrEmpty(name))
-            return Ok(_stateService.GetByName(name));
-
-        return Ok(_stateService.Get());
+        return Ok(_stateService.Get(name));
     }
 
     [HttpGet("{stateId}/city")]
@@ -75,12 +72,7 @@ public class StatesController : ControllerBase
         [FromQuery] string? name
     )
     {
-        var query = _stateService.GetCitiesByStateId(stateId).AsQueryable();
-
-        if (!string.IsNullOrEmpty(name))
-            query = query.Where(s => s.Name.ToUpper().Contains(name.ToUpper()));
-
-        return Ok(query);
+        return Ok(_stateService.GetCitiesByStateId(stateId, name));
     }
 
 }

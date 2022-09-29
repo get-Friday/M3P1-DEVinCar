@@ -3,6 +3,7 @@ using DEVinCar.Service.Interfaces.Repositories;
 using DEVinCar.Service.Interfaces.Services;
 using DEVinCar.Service.Models;
 using DEVinCar.Service.ViewModels;
+using System.Xml.Linq;
 
 namespace DEVinCar.Service.Services
 {
@@ -14,8 +15,13 @@ namespace DEVinCar.Service.Services
         {
             _stateRepository = stateRepository;
         }
-        public IList<GetStateViewModel> Get()
+        public IList<GetStateViewModel> Get(string name)
         {
+            var query = _stateRepository.Get();
+
+            if (!string.IsNullOrEmpty(name))
+                query = query.Where(s => s.Name == name);
+
             return _stateRepository.Get()
                 .Select(s => new GetStateViewModel(
                         s.Id,
@@ -104,10 +110,15 @@ namespace DEVinCar.Service.Services
         }
         // TODO
         // Verificar se getCitiesByStateId.length == 0 return NoContent
-        public IList<GetCityByIdViewModel> GetCitiesByStateId(int stateId)
+        public IList<GetCityByIdViewModel> GetCitiesByStateId(int stateId, string? name)
         {
+            var query = _stateRepository.GetCitiesByStateId(stateId);
+
+            if (!string.IsNullOrEmpty(name))
+                query = query.Where(s => s.Name.ToUpper().Contains(name.ToUpper()));
+
             State state = _stateRepository.GetStateById(stateId);
-            return _stateRepository.GetCitiesByStateId(stateId)
+            return query
                 .Select(c => new GetCityByIdViewModel(
                     c.Id,
                     c.Name,
