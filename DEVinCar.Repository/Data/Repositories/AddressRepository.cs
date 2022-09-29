@@ -13,5 +13,9 @@ namespace DEVinCar.Repository.Data.Repositories
         {
             return _context.Addresses.Include(a => a.City).AsQueryable();
         }
+        public bool HasDeliveryRelated(int addressId)
+        {
+            return _context.Deliveries.Any(d => d.AddressId == addressId);
+        }
     }
 }
