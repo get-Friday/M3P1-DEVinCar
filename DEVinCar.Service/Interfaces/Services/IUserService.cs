@@ -4,7 +4,7 @@ namespace DEVinCar.Service.Interfaces.Services
 {
     public interface IUserService
     {
-        IList<UserDTO> Get();
+        IList<UserDTO> Get(string? name, DateTime? birthDateMax, DateTime? birthDateMin);
         UserDTO GetById(int id);
         void Post(UserDTO user);
         void Delete(int userId);
