@@ -17,7 +17,7 @@ namespace DEVinCar.Service.Models
         public Address()
         {
         }
-        public Address(AddressDTO address)
+        public Address(AddressPatchDTO address)
         {
             Id = address.Id;
             CityId = address.CityId;
