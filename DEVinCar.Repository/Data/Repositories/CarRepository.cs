@@ -8,9 +8,9 @@ namespace DEVinCar.Repository.Data.Repositories
         public CarRepository(DevInCarDbContext context) : base(context)
         {
         }
-        public bool HasBeenSold(int carId)
+        public decimal GetSuggestedPrice(int carId)
         {
-            return _context.SaleCars.Any(c => c.Id == carId);
+            return _context.Cars.Find(carId).SuggestedPrice;
         }
     }
 }
