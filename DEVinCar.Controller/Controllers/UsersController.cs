@@ -18,26 +18,12 @@ public class UserController : ControllerBase
 
     [HttpGet]
     public ActionResult<List<UserDTO>> Get(
-       [FromQuery] string Name,
+       [FromQuery] string name,
        [FromQuery] DateTime? birthDateMax,
        [FromQuery] DateTime? birthDateMin
     )
     {
-        var query = _userService.Get().AsQueryable();
-
-        if (!string.IsNullOrEmpty(Name))
-            query = query.Where(c => c.Name.ToUpper().Contains(Name.ToUpper()));
-
-        if (birthDateMin.HasValue)
-            query = query.Where(c => c.BirthDate >= birthDateMin.Value);
-
-        if (birthDateMax.HasValue)
-            query = query.Where(c => c.BirthDate <= birthDateMax.Value);
-
-        if (!query.Any())
-            return NoContent();
-
-        return Ok(query);
+        return Ok(_userService.Get(name, birthDateMax, birthDateMin));
     }
 
     [HttpGet("{id}")]

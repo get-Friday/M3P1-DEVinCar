@@ -13,9 +13,23 @@ namespace DEVinCar.Service.Services
         {
             _userRepository = userRepository;
         }
-        public IList<UserDTO> Get()
+        public IList<UserDTO> Get(string? name, DateTime? birthDateMax, DateTime? birthDateMin)
         {
-            return _userRepository.Get()
+            var query = _userRepository.Get();
+
+            if (!string.IsNullOrEmpty(name))
+                query = query.Where(c => c.Name.ToUpper().Contains(name.ToUpper()));
+
+            if (birthDateMin.HasValue)
+                query = query.Where(c => c.BirthDate >= birthDateMin.Value);
+
+            if (birthDateMax.HasValue)
+                query = query.Where(c => c.BirthDate <= birthDateMax.Value);
+
+            if (!query.Any())
+                throw new Exception();
+
+            return query
                 .Select(u => new UserDTO(u))
                 .ToList();
         }
