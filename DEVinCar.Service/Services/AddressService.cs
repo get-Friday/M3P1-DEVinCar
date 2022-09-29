@@ -46,11 +46,9 @@ namespace DEVinCar.Service.Services
         }
         // TODO
         // Verificar se pelo menos um campo esta sendo alterado
-        // Converter patchDTO pra addressDTO
         public void Alter(AddressPatchDTO addressPatch)
         {
-            throw new NotImplementedException();
-            //_addressRepository.Alter(new Address(address));
+            _addressRepository.Alter(new Address(addressPatch));
         }
         // TODO
         // Verifica se address não existe retorna NotFound
