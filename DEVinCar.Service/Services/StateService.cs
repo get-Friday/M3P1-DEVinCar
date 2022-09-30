@@ -59,7 +59,7 @@ namespace DEVinCar.Service.Services
                 throw new ObjectNotFoundException($"State #{city.StateId} not found.");
 
             if (DuplicatedCityName(city.Name, city.StateId))
-                throw new Exception(); // Cannot create city with the name "{name}" in this state
+                throw new ValueNotAcceptableException($"Can't create city with the name '{city.Name}' in this state"); // 
 
             _stateRepository.PostCity(new City(city));
         }
@@ -75,7 +75,7 @@ namespace DEVinCar.Service.Services
             City city = _stateRepository.GetCityById(cityId);
 
             if (city.StateId != stateId)
-                throw new Exception(); // Invalid State {StateId} for city {CityId}
+                throw new ValueNotAcceptableException($"Invalid State #{stateId} for city #{cityId}");
 
             Address address = new()
             {
@@ -100,7 +100,7 @@ namespace DEVinCar.Service.Services
             City city = _stateRepository.GetCityById(cityId);
 
             if (city.StateId != stateId)
-                throw new Exception(); // Invalid State {StateId} for city {CityId}
+                throw new ValueNotAcceptableException($"Invalid State #{stateId} for city #{cityId}");
 
             State state = _stateRepository.GetStateById(stateId);
 
