@@ -63,7 +63,7 @@ namespace DEVinCar.Service.Services
                 throw new EqualOrLowerThanZeroException("Invalid ID. Can't be zero.");
 
             if (IsEqualOrLowerThanZero(saleCar.UnitPrice, saleCar.Amount))
-                throw new Exception(); // UnitPrice or Amount cant be lower than zero
+                throw new EqualOrLowerThanZeroException("Data can't be lower than zero.");
             
             _saleCarRepository.Post(new SaleCar(saleCar));
         }
