@@ -62,7 +62,7 @@ namespace DEVinCar.Service.Services
                 throw new ObjectNotFoundException($"Car #{car.Id} not found.");
 
             if (AllFieldsEmpty(car))
-                throw new Exception(); // Please fill all fields
+                throw new NoDataException("All fields must be filled.");
 
             if (HasDifferentCarWithThisName(car.Name, car.Id))
                 throw new DuplicatedEntryException("Car with this name already registered");
