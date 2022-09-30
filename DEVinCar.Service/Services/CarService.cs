@@ -48,7 +48,7 @@ namespace DEVinCar.Service.Services
         public void Post(CarDTO car)
         {
             if (HasCarWithThisName(car.Name))
-                throw new Exception(); // Car with this name already exists
+                throw new DuplicatedEntryException("Car with this name already registered");
 
             if (car.SuggestedPrice <= 0)
                 throw new EqualOrLowerThanZeroException("Invalid car price. Can't be zero or lower.");
@@ -65,7 +65,7 @@ namespace DEVinCar.Service.Services
                 throw new Exception(); // Please fill all fields
 
             if (HasDifferentCarWithThisName(car.Name, car.Id))
-                throw new Exception(); // Car with this name already exists 
+                throw new DuplicatedEntryException("Car with this name already registered");
 
             if (car.SuggestedPrice <= 0)
                 throw new EqualOrLowerThanZeroException("Invalid car price. Can't be zero or lower.");
