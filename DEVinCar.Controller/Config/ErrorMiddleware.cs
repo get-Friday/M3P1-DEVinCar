@@ -34,6 +34,7 @@ namespace DEVinCar.Controller.Config
                 case EqualOrLowerThanZeroException:
                 case DuplicatedEntryException:
                 case NoDataException:
+                case ValueNotAcceptableException:
                     status = HttpStatusCode.BadRequest;
                     message = exception.Message;
                     break;
