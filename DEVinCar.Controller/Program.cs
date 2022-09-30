@@ -1,5 +1,4 @@
-using System.Text.Json.Serialization;
-using DEVinCar.Controller.Data;
+using DEVinCar.Controller.Config;
 using DEVinCar.DI;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -11,6 +10,7 @@ builder.Services.AddSwaggerGen();
 builder.Services.Register();
 
 var app = builder.Build();
+app.UseMiddleware<ErrorMiddleware>();
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
