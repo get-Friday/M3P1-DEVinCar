@@ -27,7 +27,7 @@ namespace DEVinCar.Service.Services
                 query = query.Where(c => c.BirthDate <= birthDateMax.Value);
 
             if (!query.Any())
-                throw new Exception();
+                throw new Exception(); // User not found
 
             return query
                 .Select(u => new UserDTO(u))
@@ -35,17 +35,29 @@ namespace DEVinCar.Service.Services
         }
         public UserDTO GetById(int id)
         {
-            return new UserDTO(_userRepository.GetById(id));
+            User user = _userRepository.GetById(id);
+
+            if (user == null)
+                throw new Exception(); // User not found
+
+            return new UserDTO();
         }
 
         public void Post(UserDTO user)
         {
+            if (_userRepository.EmailDuplicated(user.Email))
+                throw new Exception(); // Email already registered
+
             _userRepository.Post(new User(user));
         }
 
-        public void Delete(int userId)
+        public void Delete(int id)
         {
-            User user = _userRepository.GetById(userId);
+            User user = _userRepository.GetById(id);
+
+            if (user == null)
+                throw new Exception(); // User not found
+
             _userRepository.Delete(user);
         }
     }
