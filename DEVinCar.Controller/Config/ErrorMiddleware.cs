@@ -33,7 +33,7 @@ namespace DEVinCar.Controller.Config
             {
                 case EqualOrLowerThanZeroException:
                 case DuplicatedEntryException:
-                case InvalidObjectManipulationException:
+                case NotAllowedObjectManipulationException:
                     status = HttpStatusCode.BadRequest;
                     message = exception.Message;
                     break;
