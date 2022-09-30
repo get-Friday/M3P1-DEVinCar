@@ -57,10 +57,7 @@ public class SalesController : ControllerBase
             [FromRoute] int amount
             )
     {
-        SaleCarDTO sale = _saleService.GetSoldCar(saleId);
-        sale.Amount = amount;
-        sale.CarId = carId;
-        _saleService.Alter(sale);
+        _saleService.Alter(saleId, carId, amount, null);
         return NoContent();
     }
 
@@ -71,10 +68,7 @@ public class SalesController : ControllerBase
            [FromRoute] decimal unitPrice
            )
     {
-        SaleCarDTO sale = _saleService.GetSoldCar(saleId);
-        sale.UnitPrice = unitPrice;
-        sale.CarId = carId;
-        _saleService.Alter(sale);
+        _saleService.Alter(saleId, carId, null, unitPrice);
         return NoContent();
     }
 
@@ -99,7 +93,8 @@ public class SalesController : ControllerBase
     [Route("api/user/{userId}/sales")]
     public ActionResult<SaleDTO> PostSaleUserId(
            [FromRoute] int userId,
-           [FromBody] SaleDTO body)
+           [FromBody] SaleDTO body
+    )
     {
         body.SellerId = userId;
         _saleService.PostSaleUserId(body);
