@@ -51,10 +51,10 @@ namespace DEVinCar.Service.Services
                 throw new ObjectNotFoundException($"Address #{addressPatch.Id} not found.");
 
             if (AllFieldsEmpty(addressPatch))
-                throw new Exception(); // Must have at least one field
+                throw new NoDataException("Invalid data. Must have at least one field.");
 
             if (!addressPatch.Cep.All(char.IsDigit))
-                throw new Exception(); // Every characters in cep must be numeric
+                throw new ValueNotAcceptableException("Every characters in cep must be numeric."); 
 
             _addressRepository.Alter(new Address(addressPatch));
         }
