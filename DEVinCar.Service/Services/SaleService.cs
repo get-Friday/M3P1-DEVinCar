@@ -79,7 +79,7 @@ namespace DEVinCar.Service.Services
             delivery.DeliveryForecast ??= DateTime.Now.AddDays(7);
 
             if (HasInvalidDate(delivery.DeliveryForecast))
-                throw new Exception(); // Invalid delivery forecast
+                throw new ValueNotAcceptableException("Invalid delivery forecast."); 
 
             _deliveryRepository.Post(new Delivery(delivery));
         }
