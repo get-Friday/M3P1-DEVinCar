@@ -26,7 +26,7 @@ namespace DEVinCar.Service.Services
                 query = query.Where(c => c.Name.ToUpper().Contains(name.ToUpper()));
 
             if (priceMin > priceMax)
-                throw new Exception(); // Minimal price cant be higher than maximum price
+                throw new ValueNotAcceptableException("Minimal price cant be higher than maximum price.");
 
             if (priceMin.HasValue)
                 query = query.Where(c => c.SuggestedPrice >= priceMin);
