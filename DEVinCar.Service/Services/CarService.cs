@@ -51,7 +51,7 @@ namespace DEVinCar.Service.Services
                 throw new Exception(); // Car with this name already exists
 
             if (car.SuggestedPrice <= 0)
-                throw new Exception(); // Invalid car price
+                throw new EqualOrLowerThanZeroException("Invalid car price. Can't be zero or lower.");
 
             _carRepository.Post(new Car(car));
         }
@@ -68,7 +68,7 @@ namespace DEVinCar.Service.Services
                 throw new Exception(); // Car with this name already exists 
 
             if (car.SuggestedPrice <= 0)
-                throw new Exception(); // Invalid car price
+                throw new EqualOrLowerThanZeroException("Invalid car price. Can't be zero or lower.");
 
             _carRepository.Alter(new Car(car));
         }
