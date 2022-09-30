@@ -3,7 +3,6 @@ using DEVinCar.Service.Interfaces.Repositories;
 using DEVinCar.Service.Interfaces.Services;
 using DEVinCar.Service.Models;
 using DEVinCar.Service.ViewModels;
-using System.Xml.Linq;
 
 namespace DEVinCar.Service.Services
 {
@@ -51,19 +50,31 @@ namespace DEVinCar.Service.Services
                 })
                 .ToList();
         }
-        // TODO
-        // Verificar se state == null retornar notfound
-        // Verificar se existe outra cidade com mesmo nome e state.Id retornar BadRequest
+        
         public void PostCity(CityDTO city)
         {
+            if (StateNotFound(city.StateId))
+                throw new Exception(); // State {id} not found
+
+            if (DuplicatedCityName(city.Name, city.StateId))
+                throw new Exception(); // Cannot create city with the name "{name}" in this state
+
             _stateRepository.PostCity(new City(city));
         }
-        // TODO
-        // Verificar se stateId ou cityId inexistentes retornar NotFound
-        // Verificar se cityId tenha um stateId diferente do enviado retornar BadRequest
+
         public void PostAddress(int stateId, int cityId, AddressDTO addressDTO)
         {
+            if (CityNotFound(cityId))
+                throw new Exception(); // City {id} not found
+
+            if (StateNotFound(stateId))
+                throw new Exception(); // State {id} not found
+
             City city = _stateRepository.GetCityById(cityId);
+
+            if (city.StateId != stateId)
+                throw new Exception(); // Invalid State {StateId} for city {CityId}
+
             Address address = new()
             {
                 CityId = cityId,
@@ -75,12 +86,20 @@ namespace DEVinCar.Service.Services
             };
             _stateRepository.PostAddress(address);
         }
-        // TODO
-        // Verificar se stateId ou cityId inexistentes retornar NotFound
-        // Verificar se cityId tenha um stateId diferente do enviado retornar BadRequest
+
         public GetCityByIdViewModel GetCityById(int stateId, int cityId)
         {
+            if (CityNotFound(cityId))
+                throw new Exception(); // City {id} not found
+
+            if (StateNotFound(stateId))
+                throw new Exception(); // State {id} not found
+
             City city = _stateRepository.GetCityById(cityId);
+
+            if (city.StateId != stateId)
+                throw new Exception(); // Invalid State {StateId} for city {CityId}
+
             State state = _stateRepository.GetStateById(stateId);
 
             return new GetCityByIdViewModel(
@@ -108,14 +127,16 @@ namespace DEVinCar.Service.Services
 
             return stateViewModel;
         }
-        // TODO
-        // Verificar se getCitiesByStateId.length == 0 return NoContent
+
         public IList<GetCityByIdViewModel> GetCitiesByStateId(int stateId, string? name)
         {
             var query = _stateRepository.GetCitiesByStateId(stateId);
 
             if (!string.IsNullOrEmpty(name))
                 query = query.Where(s => s.Name.ToUpper().Contains(name.ToUpper()));
+
+            if (!query.Any())
+                throw new Exception(); // No City found
 
             State state = _stateRepository.GetStateById(stateId);
             return query
@@ -127,6 +148,22 @@ namespace DEVinCar.Service.Services
                     state.Initials
                     ))
                 .ToList();
+        }
+
+        // Regras de negócio abaixo
+        private bool StateNotFound(int id)
+        {
+            return _stateRepository.GetStateById(id) == null;
+        }
+
+        private bool CityNotFound(int id)
+        {
+            return _stateRepository.GetCityById(id) == null;
+        }
+
+        private bool DuplicatedCityName(string cityName, int stateId)
+        {
+            return _stateRepository.GetCitiesByStateId(stateId).Any(c => c.Name == cityName);
         }
     }
 }
