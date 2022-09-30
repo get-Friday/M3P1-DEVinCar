@@ -60,7 +60,7 @@ namespace DEVinCar.Service.Services
                 throw new ObjectNotFoundException("Sold car not found.");
 
             if (saleCar.CarId == 0)
-                throw new EqualOrLowerThanZeroException("Invalid ID. Can't be zero."); // ID {id} invalid;
+                throw new EqualOrLowerThanZeroException("Invalid ID. Can't be zero.");
 
             if (IsEqualOrLowerThanZero(saleCar.UnitPrice, saleCar.Amount))
                 throw new Exception(); // UnitPrice or Amount cant be lower than zero
