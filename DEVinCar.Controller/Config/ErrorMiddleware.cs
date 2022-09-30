@@ -31,6 +31,10 @@ namespace DEVinCar.Controller.Config
 
             switch (exception)
             {
+                case EqualOrLowerThanZeroException:
+                    status = HttpStatusCode.BadRequest;
+                    message = exception.Message;
+                    break;
                 case ObjectNotFoundException:
                     status = HttpStatusCode.NotFound;
                     message = exception.Message;
