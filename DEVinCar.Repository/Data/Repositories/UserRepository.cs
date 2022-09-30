@@ -8,5 +8,9 @@ namespace DEVinCar.Repository.Data.Repositories
         public UserRepository(DevInCarDbContext context) : base(context)
         {
         }
+        public bool EmailDuplicated(string email)
+        {
+            return _context.Users.Any(u => u.Email == email);
+        }
     }
 }

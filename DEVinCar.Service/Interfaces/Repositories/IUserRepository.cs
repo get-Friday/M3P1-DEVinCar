@@ -8,5 +8,6 @@ namespace DEVinCar.Service.Interfaces.Repositories
         User GetById(int id);
         void Post(User user);
         void Delete(User user);
+        bool EmailDuplicated(string email);
     }
 }
