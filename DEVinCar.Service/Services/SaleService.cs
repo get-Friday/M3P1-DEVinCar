@@ -12,18 +12,24 @@ namespace DEVinCar.Service.Services
         private readonly ISaleRepository _saleRepository;
         private readonly ISaleCarRepository _saleCarRepository;
         private readonly IDeliveryRepository _deliveryRepository;
+        private readonly IAddressRepository _addressRepository;
+        private readonly IUserRepository _userRepository;
 
         public SaleService(
             ISaleRepository saleRepository, 
             ISaleCarRepository saleCarRepository,
             ICarRepository carRepository,
-            IDeliveryRepository deliveryRepository
+            IDeliveryRepository deliveryRepository,
+            IAddressRepository addressRepository,
+            IUserRepository userRepository
         )
         {
             _saleRepository = saleRepository;
             _saleCarRepository = saleCarRepository;
             _carRepository = carRepository;
             _deliveryRepository = deliveryRepository;
+            _addressRepository = addressRepository;
+            _userRepository = userRepository;
         }
         public IList<SaleViewModel> GetItemsSale(int saleId)
         {
@@ -43,68 +49,143 @@ namespace DEVinCar.Service.Services
                 })
                 .ToList();
         }
-        // TODO
-        // Verificar se saleCar.CarId e saleCar.SaleId não existe no repository retornar NotFound
-        // Verificar se saleCar.CarId == 0 retornar BadRequest
-        // Verificar se saleCar.UnitPrice <= 0 || saleCar.Amount <= 0 retornar BadRequest
+        
         public void PostSale(SaleCarDTO saleCar)
         {
+            saleCar.UnitPrice ??= _carRepository.GetSuggestedPrice(saleCar.CarId);
+            saleCar.Amount ??= 1;
+
+            if (SoldCarNotFound(saleCar.CarId, saleCar.SaleId))
+                throw new Exception(); // Sold car not found
+
+            if (saleCar.CarId == 0)
+                throw new Exception(); // ID {id} invalid;
+
+            if (IsEqualOrLowerThanZero(saleCar.UnitPrice, saleCar.Amount))
+                throw new Exception(); // UnitPrice or Amount cant be lower than zero
+            
             _saleCarRepository.Post(new SaleCar(saleCar));
         }
-        // TODO
-        // Verificar se delivery.saleId não existe retornar NotFound
-        // Verificar se delivery.AddressId não existe retornar NotFound
-        // Verificar se DateTime.Now.Date menor que delivery.DeliveryForecast retornar badRequest
+        
         public void PostDelivery(DeliveryDTO delivery)
         {
+            if (SaleNotFound(delivery.SaleId))
+                throw new Exception(); // Sale #{id} not found
+
+            if (AddressNotFound(delivery.AddressId))
+                throw new Exception(); // Address #{id} not found
+
+            delivery.DeliveryForecast ??= DateTime.Now.AddDays(7);
+
+            if (HasInvalidDate(delivery.DeliveryForecast))
+                throw new Exception(); // Invalid delivery forecast
+
             _deliveryRepository.Post(new Delivery(delivery));
         }
-        public void Alter(SaleCarDTO salesCar)
+
+        public void Alter(int saleId, int carId, int? amount, decimal? unitPrice)
         {
-            _saleCarRepository.Alter(new SaleCar(salesCar));
+            if (SaleNotFound(saleId))
+                throw new Exception(); // Sale {id} not found
+
+            if (SoldCarNotFound(carId, saleId))
+                throw new Exception(); // Sold car {id} not found
+
+            if (IsEqualOrLowerThanZero(unitPrice, amount))
+                throw new Exception(); // Values cant be lower than zero
+
+            SaleCar soldCar = _saleCarRepository.GetSoldCar(carId);
+
+            if (amount.HasValue)
+                soldCar.Amount = amount;
+
+            if (unitPrice.HasValue)
+                soldCar.UnitPrice = (decimal)unitPrice;
+
+            _saleCarRepository.Alter(soldCar);
         }
+
         public IList<SaleDTO> GetSalesByUserId(int userId)
         {
             return _saleRepository.GetSalesByUserId(userId)
                 .Select(s => new SaleDTO(s))
                 .ToList();
         }
+
         public IList<SaleDTO> GetSalesBySellerId(int userId)
         {
             return _saleRepository.GetSalesBySellerId(userId)
                 .Select(s => new SaleDTO(s))
                 .ToList();
         }
-        // TODO
-        // Verificar se sale.BuyerId = 0 retornar BadRequest
-        // Verificar se sale.SellerId em User não existe retornar NotFound
-        // Verificar se sale.BuyerId em User não existe retornar NotFound
+
         public void PostSaleUserId(SaleDTO sale)
         {
+            if (sale.BuyerId == 0)
+                throw new Exception(); // Invalid buyer ID
+
+            if (UserNotFound(sale.BuyerId) || UserNotFound(sale.SellerId))
+                throw new Exception(); // User {id} not found
+
 
             _saleRepository.PostSaleUserId(new Sale(sale));
         }
-        // TODO
-        // Verificar se buy.BuyerId em User não existe retornar NotFound
-        // Verificar se buy.SellerId em User não existe retornar NotFound
+        
         public void PostBuyUserId(BuyDTO buy)
         {
+            if (UserNotFound(buy.BuyerId) || UserNotFound(buy.SellerId))
+                throw new Exception(); // User {id} not found
+
             _saleRepository.PostBuyUserId(new Sale(buy));
         }
         public decimal GetSuggestedPrice(int carId)
         {
             return _carRepository.GetSuggestedPrice(carId);
         }
-        // TODO 
-        // Verificar se existe sale com o id passado
+
         public SaleCarDTO GetSoldCar(int saleId)
         {
+            if (SaleNotFound(saleId))
+                throw new Exception(); // Sale {id} not found
+
             return new SaleCarDTO(_saleCarRepository.GetSoldCar(saleId));
         }
 
+        // Regras de negócio abaixo
         private bool SoldCarNotFound(int carId, int saleId)
         {
+            return (
+                _carRepository.GetById(carId) == null &&
+                _saleRepository.SaleExists(saleId) == false
+            );
+        }
 
+        private bool IsEqualOrLowerThanZero(decimal? unitPrice, int? amount)
+        {
+            return (
+                unitPrice <= 0 ||
+                amount <= 0
+            );
+        }
+
+        private bool SaleNotFound(int id)
+        {
+            return _saleRepository.SaleExists(id) == false;
+        }
+
+        private bool AddressNotFound(int id)
+        {
+            return _addressRepository.GetById(id) == null;
+        }
+
+        private bool HasInvalidDate(DateTime? deliveryForecast)
+        {
+            return deliveryForecast < DateTime.Now.Date;
+        }
+
+        private bool UserNotFound(int id)
+        {
+            return _userRepository.GetById(id) == null;
         }
     }
 }
