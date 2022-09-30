@@ -64,7 +64,7 @@ namespace DEVinCar.Service.Services
                 throw new ObjectNotFoundException($"Address #{id} not found.");
 
             if (_addressRepository.HasDeliveryRelated(id))
-                throw new Exception(); // Cannot delete address {Id} because it is related to Delivery
+                throw new InvalidObjectManipulationException($"Can't delete address {id} because it is related to a Delivery");
 
             Address address = _addressRepository.GetById(id);
             _addressRepository.Delete(address);
