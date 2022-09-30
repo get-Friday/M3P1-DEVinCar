@@ -1,4 +1,5 @@
 ﻿using DEVinCar.Service.DTOs;
+using DEVinCar.Service.Exceptions;
 using DEVinCar.Service.Interfaces.Repositories;
 using DEVinCar.Service.Interfaces.Services;
 using DEVinCar.Service.Models;
@@ -25,7 +26,7 @@ namespace DEVinCar.Service.Services
                 query = query.Where(c => c.Name.ToUpper().Contains(name.ToUpper()));
 
             if (priceMin > priceMax)
-                throw new Exception(); // Minimal price cant be higher than maximum price
+                throw new ValueNotAcceptableException("Minimal price cant be higher than maximum price.");
 
             if (priceMin.HasValue)
                 query = query.Where(c => c.SuggestedPrice >= priceMin);
@@ -34,7 +35,7 @@ namespace DEVinCar.Service.Services
                 query = query.Where(c => c.SuggestedPrice <= priceMax);
 
             if (!query.ToList().Any())
-                throw new Exception(); // No car found
+                throw new ObjectNotFoundException("Car not found.");
 
             return query.ToList();
         }
@@ -47,10 +48,10 @@ namespace DEVinCar.Service.Services
         public void Post(CarDTO car)
         {
             if (HasCarWithThisName(car.Name))
-                throw new Exception(); // Car with this name already exists
+                throw new DuplicatedEntryException("Car with this name already registered");
 
             if (car.SuggestedPrice <= 0)
-                throw new Exception(); // Invalid car price
+                throw new EqualOrLowerThanZeroException("Invalid car price. Can't be zero or lower.");
 
             _carRepository.Post(new Car(car));
         }
@@ -58,17 +59,16 @@ namespace DEVinCar.Service.Services
         public void Alter(CarDTO car)
         {
             if (CarNotFound(car.Id))
-                throw new Exception(); // Car not found
+                throw new ObjectNotFoundException($"Car #{car.Id} not found.");
 
             if (AllFieldsEmpty(car))
-                throw new Exception(); // Please fill all fields
+                throw new NoDataException("All fields must be filled.");
 
             if (HasDifferentCarWithThisName(car.Name, car.Id))
-                throw new Exception(); // Car with this name already exists 
+                throw new DuplicatedEntryException("Car with this name already registered");
 
             if (car.SuggestedPrice <= 0)
-                throw new Exception(); // Invalid car price
-
+                throw new EqualOrLowerThanZeroException("Invalid car price. Can't be zero or lower.");
 
             _carRepository.Alter(new Car(car));
         }
@@ -76,15 +76,16 @@ namespace DEVinCar.Service.Services
         public void Delete(int carId)
         {
             if (CarNotFound(carId))
-                throw new Exception(); // Car not found
+                throw new ObjectNotFoundException($"Car #{carId} not found.");
 
             if (_saleCarRepository.HasBeenSold(carId))
-                throw new Exception(); // Cannot delete sold car
+                throw new NotAllowedObjectManipulationException($"Can't delete car {carId} because it is related to a Sale");
 
             Car car = _carRepository.GetById(carId);
             _carRepository.Delete(car);
         }
 
+        // Regras de negócio abaixo
         private bool CarNotFound(int id)
         {
             return _carRepository.GetById(id) == null;

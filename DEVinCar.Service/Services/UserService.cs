@@ -2,6 +2,7 @@
 using DEVinCar.Service.Interfaces.Services;
 using DEVinCar.Service.DTOs;
 using DEVinCar.Service.Models;
+using DEVinCar.Service.Exceptions;
 
 namespace DEVinCar.Service.Services
 {
@@ -27,7 +28,7 @@ namespace DEVinCar.Service.Services
                 query = query.Where(c => c.BirthDate <= birthDateMax.Value);
 
             if (!query.Any())
-                throw new Exception(); // User not found
+                throw new ObjectNotFoundException("User not found.");
 
             return query
                 .Select(u => new UserDTO(u))
@@ -38,7 +39,7 @@ namespace DEVinCar.Service.Services
             User user = _userRepository.GetById(id);
 
             if (user == null)
-                throw new Exception(); // User not found
+                throw new ObjectNotFoundException("User not found.");
 
             return new UserDTO();
         }
@@ -46,7 +47,7 @@ namespace DEVinCar.Service.Services
         public void Post(UserDTO user)
         {
             if (_userRepository.EmailDuplicated(user.Email))
-                throw new Exception(); // Email already registered
+                throw new DuplicatedEntryException("Email already registered.");
 
             _userRepository.Post(new User(user));
         }
@@ -56,7 +57,7 @@ namespace DEVinCar.Service.Services
             User user = _userRepository.GetById(id);
 
             if (user == null)
-                throw new Exception(); // User not found
+                throw new ObjectNotFoundException("User not found.");
 
             _userRepository.Delete(user);
         }

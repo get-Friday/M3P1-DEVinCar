@@ -1,4 +1,5 @@
 ﻿using DEVinCar.Service.DTOs;
+using DEVinCar.Service.Exceptions;
 using DEVinCar.Service.Interfaces.Repositories;
 using DEVinCar.Service.Interfaces.Services;
 
@@ -24,7 +25,7 @@ namespace DEVinCar.Service.Services
                 query = query.Where(d => d.SaleId == saleId);
 
             if (!query.ToList().Any())
-                throw new Exception();
+                throw new ObjectNotFoundException("Delivery not found.");
 
             return query.ToList();
         }

@@ -1,4 +1,5 @@
 ﻿using DEVinCar.Service.DTOs;
+using DEVinCar.Service.Exceptions;
 using DEVinCar.Service.Interfaces.Repositories;
 using DEVinCar.Service.Interfaces.Services;
 using DEVinCar.Service.Models;
@@ -39,25 +40,26 @@ namespace DEVinCar.Service.Services
 
             return _stateRepository.GetByName(name)
                 .Select(s => new GetStateViewModel(
-                        s.Id,
-                        s.Name,
-                        s.Initials
-                    )
-                {
-                    Cities = _stateRepository.GetCitiesByStateId(s.Id)
+                            s.Id,
+                            s.Name,
+                            s.Initials
+                        )
+                    {
+                        Cities = _stateRepository
+                            .GetCitiesByStateId(s.Id)
                             .Select(c => c.Name)
                             .ToList()
-                })
-                .ToList();
-        }
+                    })
+                    .ToList();
+            }
         
         public void PostCity(CityDTO city)
         {
             if (StateNotFound(city.StateId))
-                throw new Exception(); // State {id} not found
+                throw new ObjectNotFoundException($"State #{city.StateId} not found.");
 
             if (DuplicatedCityName(city.Name, city.StateId))
-                throw new Exception(); // Cannot create city with the name "{name}" in this state
+                throw new ValueNotAcceptableException($"Can't create city with the name '{city.Name}' in this state"); // 
 
             _stateRepository.PostCity(new City(city));
         }
@@ -65,15 +67,15 @@ namespace DEVinCar.Service.Services
         public void PostAddress(int stateId, int cityId, AddressDTO addressDTO)
         {
             if (CityNotFound(cityId))
-                throw new Exception(); // City {id} not found
+                throw new ObjectNotFoundException($"City #{cityId} not found.");
 
             if (StateNotFound(stateId))
-                throw new Exception(); // State {id} not found
+                throw new ObjectNotFoundException($"State #{stateId} not found.");
 
             City city = _stateRepository.GetCityById(cityId);
 
             if (city.StateId != stateId)
-                throw new Exception(); // Invalid State {StateId} for city {CityId}
+                throw new ValueNotAcceptableException($"Invalid State #{stateId} for city #{cityId}");
 
             Address address = new()
             {
@@ -90,15 +92,15 @@ namespace DEVinCar.Service.Services
         public GetCityByIdViewModel GetCityById(int stateId, int cityId)
         {
             if (CityNotFound(cityId))
-                throw new Exception(); // City {id} not found
+                throw new ObjectNotFoundException($"City #{cityId} not found.");
 
             if (StateNotFound(stateId))
-                throw new Exception(); // State {id} not found
+                throw new ObjectNotFoundException($"State #{stateId} not found.");
 
             City city = _stateRepository.GetCityById(cityId);
 
             if (city.StateId != stateId)
-                throw new Exception(); // Invalid State {StateId} for city {CityId}
+                throw new ValueNotAcceptableException($"Invalid State #{stateId} for city #{cityId}");
 
             State state = _stateRepository.GetStateById(stateId);
 
@@ -136,7 +138,7 @@ namespace DEVinCar.Service.Services
                 query = query.Where(s => s.Name.ToUpper().Contains(name.ToUpper()));
 
             if (!query.Any())
-                throw new Exception(); // No City found
+                throw new ObjectNotFoundException("City not found.");
 
             State state = _stateRepository.GetStateById(stateId);
             return query

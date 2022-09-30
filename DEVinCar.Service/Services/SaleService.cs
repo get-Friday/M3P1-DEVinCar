@@ -1,4 +1,5 @@
 ﻿using DEVinCar.Service.DTOs;
+using DEVinCar.Service.Exceptions;
 using DEVinCar.Service.Interfaces.Repositories;
 using DEVinCar.Service.Interfaces.Services;
 using DEVinCar.Service.Models;
@@ -56,13 +57,13 @@ namespace DEVinCar.Service.Services
             saleCar.Amount ??= 1;
 
             if (SoldCarNotFound(saleCar.CarId, saleCar.SaleId))
-                throw new Exception(); // Sold car not found
+                throw new ObjectNotFoundException("Sold car not found.");
 
             if (saleCar.CarId == 0)
-                throw new Exception(); // ID {id} invalid;
+                throw new EqualOrLowerThanZeroException("Invalid ID. Can't be zero.");
 
             if (IsEqualOrLowerThanZero(saleCar.UnitPrice, saleCar.Amount))
-                throw new Exception(); // UnitPrice or Amount cant be lower than zero
+                throw new EqualOrLowerThanZeroException("Data can't be lower than zero.");
             
             _saleCarRepository.Post(new SaleCar(saleCar));
         }
@@ -70,15 +71,15 @@ namespace DEVinCar.Service.Services
         public void PostDelivery(DeliveryDTO delivery)
         {
             if (SaleNotFound(delivery.SaleId))
-                throw new Exception(); // Sale #{id} not found
+                throw new ObjectNotFoundException($"Sale #{delivery.SaleId} not found.");
 
             if (AddressNotFound(delivery.AddressId))
-                throw new Exception(); // Address #{id} not found
+                throw new ObjectNotFoundException($"Address #{delivery.AddressId} not found.");
 
             delivery.DeliveryForecast ??= DateTime.Now.AddDays(7);
 
             if (HasInvalidDate(delivery.DeliveryForecast))
-                throw new Exception(); // Invalid delivery forecast
+                throw new ValueNotAcceptableException("Invalid delivery forecast."); 
 
             _deliveryRepository.Post(new Delivery(delivery));
         }
@@ -86,13 +87,13 @@ namespace DEVinCar.Service.Services
         public void Alter(int saleId, int carId, int? amount, decimal? unitPrice)
         {
             if (SaleNotFound(saleId))
-                throw new Exception(); // Sale {id} not found
+                throw new ObjectNotFoundException($"Sale #{saleId} not found.");
 
             if (SoldCarNotFound(carId, saleId))
-                throw new Exception(); // Sold car {id} not found
+                throw new ObjectNotFoundException($"Sold car #{carId} not found.");
 
             if (IsEqualOrLowerThanZero(unitPrice, amount))
-                throw new Exception(); // Values cant be lower than zero
+                throw new EqualOrLowerThanZeroException("Invalid Values. Can't be zero or lower.");
 
             SaleCar soldCar = _saleCarRepository.GetSoldCar(carId);
 
@@ -122,10 +123,10 @@ namespace DEVinCar.Service.Services
         public void PostSaleUserId(SaleDTO sale)
         {
             if (sale.BuyerId == 0)
-                throw new Exception(); // Invalid buyer ID
+                throw new EqualOrLowerThanZeroException("Invalid ID. Can't be zero.");
 
             if (UserNotFound(sale.BuyerId) || UserNotFound(sale.SellerId))
-                throw new Exception(); // User {id} not found
+                throw new ObjectNotFoundException("User not found.");
 
 
             _saleRepository.PostSaleUserId(new Sale(sale));
@@ -134,7 +135,7 @@ namespace DEVinCar.Service.Services
         public void PostBuyUserId(BuyDTO buy)
         {
             if (UserNotFound(buy.BuyerId) || UserNotFound(buy.SellerId))
-                throw new Exception(); // User {id} not found
+                throw new ObjectNotFoundException("User not found.");
 
             _saleRepository.PostBuyUserId(new Sale(buy));
         }
@@ -146,7 +147,7 @@ namespace DEVinCar.Service.Services
         public SaleCarDTO GetSoldCar(int saleId)
         {
             if (SaleNotFound(saleId))
-                throw new Exception(); // Sale {id} not found
+                throw new ObjectNotFoundException($"Sale #{saleId} not found.");
 
             return new SaleCarDTO(_saleCarRepository.GetSoldCar(saleId));
         }

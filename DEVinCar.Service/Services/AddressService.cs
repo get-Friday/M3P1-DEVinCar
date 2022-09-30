@@ -3,6 +3,7 @@ using DEVinCar.Service.Models;
 using DEVinCar.Service.Interfaces.Repositories;
 using DEVinCar.Service.Interfaces.Services;
 using DEVinCar.Service.ViewModels;
+using DEVinCar.Service.Exceptions;
 
 namespace DEVinCar.Service.Services
 {
@@ -31,7 +32,7 @@ namespace DEVinCar.Service.Services
                 query = query.Where(a => a.Cep == cep);
 
             if (!query.ToList().Any())
-                throw new Exception();
+                throw new ObjectNotFoundException("Address not found.");
 
 
             return query.Select(a => new AddressViewModel(
@@ -47,28 +48,29 @@ namespace DEVinCar.Service.Services
         public void Alter(AddressPatchDTO addressPatch)
         {
             if (AddressNotFound(addressPatch.Id))
-                throw new Exception(); // Address {Id} not found
+                throw new ObjectNotFoundException($"Address #{addressPatch.Id} not found.");
 
             if (AllFieldsEmpty(addressPatch))
-                throw new Exception(); // Must have at least one field
+                throw new NoDataException("Invalid data. Must have at least one field.");
 
             if (!addressPatch.Cep.All(char.IsDigit))
-                throw new Exception(); // Every characters in cep must be numeric
+                throw new ValueNotAcceptableException("Every characters in cep must be numeric."); 
 
             _addressRepository.Alter(new Address(addressPatch));
         }
         public void Delete(int id)
         {
             if (AddressNotFound(id))
-                throw new Exception(); // Address {Id} not found
+                throw new ObjectNotFoundException($"Address #{id} not found.");
 
             if (_addressRepository.HasDeliveryRelated(id))
-                throw new Exception(); // Cannot delete address {Id} because it is related to Delivery
+                throw new NotAllowedObjectManipulationException($"Can't delete address {id} because it is related to a Delivery.");
 
             Address address = _addressRepository.GetById(id);
             _addressRepository.Delete(address);
         }
 
+        // Regras de negócio abaixo
         private static bool AllFieldsEmpty(AddressPatchDTO address)
         {
             return (
