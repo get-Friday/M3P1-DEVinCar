@@ -47,7 +47,7 @@ namespace DEVinCar.Service.Services
         public void Post(UserDTO user)
         {
             if (_userRepository.EmailDuplicated(user.Email))
-                throw new Exception(); // Email already registered
+                throw new DuplicatedEntryException("Email already registered.");
 
             _userRepository.Post(new User(user));
         }
