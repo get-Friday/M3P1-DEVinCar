@@ -12,7 +12,7 @@ namespace DEVinCar.Service.Interfaces.Services
         void PostSaleUserId(SaleDTO sale);
         void PostBuyUserId(BuyDTO buy);
         void PostDelivery(DeliveryDTO delivery);
-        void Alter(SaleCarDTO salesCar);
+        void Alter(int saleId, int carId, int? amount, decimal? unitPrice);
         decimal GetSuggestedPrice(int carId);
         SaleCarDTO GetSoldCar(int carId);
     }
