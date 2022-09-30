@@ -60,7 +60,7 @@ namespace DEVinCar.Service.Services
                 throw new ObjectNotFoundException("Sold car not found.");
 
             if (saleCar.CarId == 0)
-                throw new Exception(); // ID {id} invalid;
+                throw new EqualOrLowerThanZeroException("Invalid ID. Can't be zero."); // ID {id} invalid;
 
             if (IsEqualOrLowerThanZero(saleCar.UnitPrice, saleCar.Amount))
                 throw new Exception(); // UnitPrice or Amount cant be lower than zero
@@ -93,7 +93,7 @@ namespace DEVinCar.Service.Services
                 throw new ObjectNotFoundException($"Sold car #{carId} not found.");
 
             if (IsEqualOrLowerThanZero(unitPrice, amount))
-                throw new Exception(); // Values cant be lower than zero
+                throw new EqualOrLowerThanZeroException("Invalid Values. Can't be zero or lower.");
 
             SaleCar soldCar = _saleCarRepository.GetSoldCar(carId);
 
@@ -123,7 +123,7 @@ namespace DEVinCar.Service.Services
         public void PostSaleUserId(SaleDTO sale)
         {
             if (sale.BuyerId == 0)
-                throw new Exception(); // Invalid buyer ID
+                throw new EqualOrLowerThanZeroException("Invalid ID. Can't be zero.");
 
             if (UserNotFound(sale.BuyerId) || UserNotFound(sale.SellerId))
                 throw new ObjectNotFoundException("User not found.");
