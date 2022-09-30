@@ -40,5 +40,10 @@ namespace DEVinCar.Repository.Data.Repositories
             _context.Sales.Add(buy);
             _context.SaveChanges();
         }
+
+        public bool SaleExists(int id)
+        {
+            return _context.Sales.Any(s => s.Id == id);
+        }
     }
 }

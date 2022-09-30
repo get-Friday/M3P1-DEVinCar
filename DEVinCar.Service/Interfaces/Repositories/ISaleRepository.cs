@@ -9,5 +9,6 @@ namespace DEVinCar.Service.Interfaces.Repositories
         IEnumerable<Sale> GetSalesBySellerId(int userId);
         void PostSaleUserId(Sale sale);
         void PostBuyUserId(Sale buy);
+        bool SaleExists(int id);
     }
 }
