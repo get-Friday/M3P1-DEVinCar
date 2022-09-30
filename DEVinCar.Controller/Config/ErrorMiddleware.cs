@@ -32,6 +32,7 @@ namespace DEVinCar.Controller.Config
             switch (exception)
             {
                 case EqualOrLowerThanZeroException:
+                case DuplicatedEntryException:
                     status = HttpStatusCode.BadRequest;
                     message = exception.Message;
                     break;
