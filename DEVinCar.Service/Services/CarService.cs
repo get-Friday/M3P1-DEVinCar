@@ -79,7 +79,7 @@ namespace DEVinCar.Service.Services
                 throw new ObjectNotFoundException($"Car #{carId} not found.");
 
             if (_saleCarRepository.HasBeenSold(carId))
-                throw new Exception(); // Cannot delete sold car
+                throw new InvalidObjectManipulationException($"Can't delete car {carId} because it is related to a Sale");
 
             Car car = _carRepository.GetById(carId);
             _carRepository.Delete(car);
