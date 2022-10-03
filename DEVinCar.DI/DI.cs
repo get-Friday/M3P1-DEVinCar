@@ -15,6 +15,7 @@ namespace DEVinCar.DI
             services.AddScoped<IAddressRepository, AddressRepository>();
             services.AddScoped<IAddressService, AddressService>();
             services.AddScoped<ICarRepository, CarRepository>();
+            services.AddScoped<ISaleCarRepository, SaleCarRepository>();
             services.AddScoped<ICarService, CarService>();
             services.AddScoped<IDeliveryRepository, DeliveryRepository>();
             services.AddScoped<IDeliveryService, DeliveryService>();
