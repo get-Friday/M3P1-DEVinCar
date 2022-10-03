@@ -19,7 +19,7 @@ namespace DEVinCar.Service.Models
         public SaleCar(SaleCarDTO saleCar)
         {
             Id = saleCar.Id;
-            UnitPrice = saleCar.UnitPrice;
+            UnitPrice = saleCar.UnitPrice ??= 0;
             Amount = saleCar.Amount;
             CarId = saleCar.CarId;
             SaleId = saleCar.SaleId;

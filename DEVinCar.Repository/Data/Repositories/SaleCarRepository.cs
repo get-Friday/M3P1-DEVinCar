@@ -3,7 +3,7 @@ using DEVinCar.Service.Models;
 
 namespace DEVinCar.Repository.Data.Repositories
 {
-    internal class SaleCarRepository : BaseRepository<SaleCar, int>, ISaleCarRepository
+    public class SaleCarRepository : BaseRepository<SaleCar, int>, ISaleCarRepository
     {
         public SaleCarRepository(DevInCarDbContext context) : base(context)
         {

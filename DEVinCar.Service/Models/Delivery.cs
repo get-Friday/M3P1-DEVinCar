@@ -17,7 +17,7 @@ public class Delivery
     public Delivery(DeliveryDTO delivery)
     {
         Id = delivery.Id;
-        DeliveryForecast = delivery.DeliveryForecast;
+        DeliveryForecast = delivery.DeliveryForecast ??= DateTime.Now.AddDays(7);
         AddressId = delivery.AddressId;
         SaleId = delivery.SaleId;
     }
