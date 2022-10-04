@@ -1,7 +1,9 @@
 ﻿using DEVinCar.Service.DTOs;
 using DEVinCar.Service.Interfaces.Services;
 using DEVinCar.Service.ViewModels;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.Data;
 
 namespace DEVinCar.Controller.Controllers;
 
@@ -24,6 +26,7 @@ public class SalesController : ControllerBase
     }
 
     [HttpPost("{saleId}/item")]
+    [Authorize(Roles = "Vendedor,Gerente")]
     public ActionResult<SaleCarDTO> PostSale(
        [FromBody] SaleCarDTO body,
        [FromRoute] int saleId

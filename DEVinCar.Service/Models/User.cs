@@ -1,4 +1,5 @@
 using DEVinCar.Service.DTOs;
+using DEVinCar.Service.Enums;
 
 namespace DEVinCar.Service.Models
 {
@@ -9,6 +10,7 @@ namespace DEVinCar.Service.Models
         public string Password { internal get; set; }
         public string Name { get; set; }
         public DateTime BirthDate { get; set; }
+        public Permissions Role { get; set; }
 
         public User()
         {
@@ -28,6 +30,7 @@ namespace DEVinCar.Service.Models
             Password = user.Password;
             Name = user.Name;
             BirthDate = user.BirthDate;
+            Role = user.Role;
         }
     }
 }

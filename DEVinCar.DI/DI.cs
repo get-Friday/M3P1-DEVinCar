@@ -25,6 +25,7 @@ namespace DEVinCar.DI
             services.AddScoped<IStateService, StateService>();
             services.AddScoped<IUserRepository, UserRepository>();
             services.AddScoped<IUserService, UserService>();
+            services.AddScoped<ITokenService, TokenService>();
             return services;
         }
     }

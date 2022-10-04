@@ -4,16 +4,18 @@ using DEVinCar.Repository.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
 
-namespace DEVinCar.Controller.Data.Migrations
+namespace DEVinCar.Repository.Migrations
 {
     [DbContext(typeof(DevInCarDbContext))]
-    partial class DevInCarDbContextModelSnapshot : ModelSnapshot
+    [Migration("20221004010714_UserRecebeColunaRole")]
+    partial class UserRecebeColunaRole
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
