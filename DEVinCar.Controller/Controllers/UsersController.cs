@@ -1,6 +1,7 @@
 ﻿using DEVinCar.Service.DTOs;
 using DEVinCar.Service.Interfaces.Services;
 using Microsoft.AspNetCore.Mvc;
+using DEVinCar.Service.Enums;
 
 namespace DEVinCar.Controller.Controllers;
 
@@ -39,6 +40,7 @@ public class UserController : ControllerBase
         [FromBody] UserDTO userDto
     )
     {
+        userDto.Role = Permissions.Comprador;
         _userService.Post(userDto);
         return Created("api/user", userDto.Id);
     }
