@@ -7,8 +7,12 @@
   </PropertyGroup>
 
     <ItemGroup>
-		<InternalsVisibleTo Include="DEVinCar.DI"/>
-		<InternalsVisibleTo Include="DEVinCar.Repository"/>
+		<InternalsVisibleTo Include="DEVinCar.DI" />
+		<InternalsVisibleTo Include="DEVinCar.Repository" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="6.10.0" />
     </ItemGroup>
 
 </Project>
