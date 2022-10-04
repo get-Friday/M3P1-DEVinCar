@@ -30,6 +30,7 @@ namespace DEVinCar.Service.Models
             Password = user.Password;
             Name = user.Name;
             BirthDate = user.BirthDate;
+            Role = user.Role;
         }
     }
 }
