@@ -8,5 +8,6 @@ namespace DEVinCar.Service.Interfaces.Services
         UserDTO GetById(int id);
         void Post(UserDTO user);
         void Delete(int userId);
+        LoginDTO Login(string email, string password);
     }
 }
