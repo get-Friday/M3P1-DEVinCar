@@ -1,11 +1,13 @@
 using DEVinCar.Service.DTOs;
 using DEVinCar.Service.Interfaces.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace DEVinCar.Controller.Controllers;
 
 [ApiController]
 [Route("api/car")]
+[Authorize(Roles = "Gerente")]
 public class CarController : ControllerBase
 {
     private readonly ICarService _carService;
