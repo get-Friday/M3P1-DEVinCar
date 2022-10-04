@@ -29,6 +29,9 @@ namespace DEVinCar.Repository.Data.Mappings
                 .Property(u => u.BirthDate);
 
             builder
+                .Property(u => u.Role);
+
+            builder
                 .HasData(new[] {
                     new User (1, "jose@email.com", "123456opp78", "Jose", new DateTime(2000, 12, 10)),
                     new User (2, "andrea@email.com", "987dasd654321", "Andrea", new DateTime(1999, 05, 11)),
