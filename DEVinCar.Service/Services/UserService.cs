@@ -61,5 +61,14 @@ namespace DEVinCar.Service.Services
 
             _userRepository.Delete(user);
         }
+        public LoginDTO Login(string email, string password)
+        {
+            User user = _userRepository.Login(email, password);
+
+            if (user == null)
+                throw new ObjectNotFoundException("Invalid email or password.");
+
+            return new LoginDTO(user);
+        }
     }
 }
