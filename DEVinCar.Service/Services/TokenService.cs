@@ -1,4 +1,5 @@
 ﻿using DEVinCar.Service.DTOs;
+using DEVinCar.Service.Interfaces.Services;
 using DEVinCar.Service.Security;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
@@ -7,9 +8,9 @@ using System.Text;
 
 namespace DEVinCar.Service.Services
 {
-    internal class TokenService
+    internal class TokenService : ITokenService
     {
-        public static string GenerateTokenFromUser(LoginDTO user)
+        public string GenerateTokenFromUser(LoginDTO user)
         {
             var claims = new Claim[]
              {
@@ -20,7 +21,7 @@ namespace DEVinCar.Service.Services
             return GenerateTokenFromClaims(claims);
         }
 
-        public static string GenerateTokenFromClaims(IEnumerable<Claim> claims)
+        private static string GenerateTokenFromClaims(IEnumerable<Claim> claims)
         {
             var tokenHandler = new JwtSecurityTokenHandler();
             var key = Encoding.ASCII.GetBytes(Settings.Key);
