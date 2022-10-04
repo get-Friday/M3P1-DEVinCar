@@ -9,5 +9,6 @@ namespace DEVinCar.Service.Interfaces.Repositories
         void Post(User user);
         void Delete(User user);
         bool EmailDuplicated(string email);
+        User Login(string email, string password);
     }
 }
