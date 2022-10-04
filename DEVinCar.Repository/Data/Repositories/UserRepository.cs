@@ -12,5 +12,9 @@ namespace DEVinCar.Repository.Data.Repositories
         {
             return _context.Users.Any(u => u.Email == email);
         }
+        public User Login(string email, string password)
+        {
+            return _context.Users.Where(u => u.Email == email && u.Password == password).FirstOrDefault();
+        }
     }
 }
