@@ -1,13 +1,14 @@
 ﻿using DEVinCar.Service.DTOs;
 using DEVinCar.Service.Interfaces.Services;
 using DEVinCar.Service.ViewModels;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace DEVinCar.Controller.Controllers;
 
 [ApiController]
 [Route("api/address")]
-
+[Authorize]
 public class AddressesController : ControllerBase
 {
     private readonly IAddressService _addressService;
