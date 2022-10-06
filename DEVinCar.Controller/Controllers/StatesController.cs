@@ -1,12 +1,14 @@
 ﻿using DEVinCar.Service.DTOs;
 using DEVinCar.Service.Interfaces.Services;
 using DEVinCar.Service.ViewModels;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace DEVinCar.Controller.Controllers;
 
 [ApiController]
 [Route("api/state")]
+[Authorize]
 public class StatesController : ControllerBase
 {
     private readonly IStateService _stateService;
