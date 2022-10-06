@@ -35,11 +35,8 @@ namespace DEVinCar.Controller.Config
                 case DuplicatedEntryException:
                 case NoDataException:
                 case ValueNotAcceptableException:
-                    status = HttpStatusCode.BadRequest;
-                    message = exception.Message;
-                    break;
                 case NotAllowedObjectManipulationException:
-                    status = HttpStatusCode.NotAcceptable;
+                    status = HttpStatusCode.BadRequest;
                     message = exception.Message;
                     break;
                 case ObjectNotFoundException:
