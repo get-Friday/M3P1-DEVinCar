@@ -2,6 +2,7 @@ using DEVinCar.Controller.Config;
 using DEVinCar.DI;
 using DEVinCar.Service.Security;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Mvc.Formatters;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
 
@@ -32,6 +33,13 @@ builder.Services.AddAuthentication(auth => {
             ValidateAudience = false
         };
     });
+
+builder.Services.AddMvc(config =>
+{
+    config.ReturnHttpNotAcceptable = true;
+    config.OutputFormatters.Add(new XmlSerializerOutputFormatter());
+    config.InputFormatters.Add(new XmlSerializerInputFormatter(config));
+});
 
 var app = builder.Build();
 app.UseMiddleware<ErrorMiddleware>();
