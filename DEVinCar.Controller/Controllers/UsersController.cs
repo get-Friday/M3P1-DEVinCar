@@ -2,12 +2,13 @@
 using DEVinCar.Service.Interfaces.Services;
 using Microsoft.AspNetCore.Mvc;
 using DEVinCar.Service.Enums;
+using Microsoft.AspNetCore.Authorization;
 
 namespace DEVinCar.Controller.Controllers;
 
 [ApiController]
 [Route("api/user")]
-
+[Authorize]
 public class UserController : ControllerBase
 {
     private readonly IUserService _userService;
