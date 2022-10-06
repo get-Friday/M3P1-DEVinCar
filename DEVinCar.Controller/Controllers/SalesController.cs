@@ -3,12 +3,12 @@ using DEVinCar.Service.Interfaces.Services;
 using DEVinCar.Service.ViewModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using System.Data;
 
 namespace DEVinCar.Controller.Controllers;
 
 [ApiController]
 [Route("api/sale")]
+[Authorize]
 public class SalesController : ControllerBase
 {
     private readonly ISaleService _saleService;
