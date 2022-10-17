@@ -1,22 +1,24 @@
 # DEVinCar
 
+**O projeto DEVinCar foi desenvolvido pelos alunos meses atr√°s e hoje como pen√∫ltimo projeto do curso tivemos o desafio de refatora-lo.**
+
 Projeto avaliativo **DEVinHouse** desenvolvido com ASP.NET 6 com EntityFramework Core 6, em C#, conectando em base SQL Server.
 
 ## Sobre
 
-O projeto desenvolve uma API para vendas de carros. Separados em 3 mÛdulos:
-1. MÛdulo de Cadastro: Respons·vel por manter e gerir o cadastro de usu·rios e produtos; 
-2. MÛdulo de Vendas: Respons·vel por gerir as vendas de carros e as entregas;
-3. MÛdulo de Geo-Posicionamento: Respons·vel por gerir o cadastro de cidades, estados e endereÁos.
+O projeto desenvolve uma API para vendas de carros. Separados em 3 m√≥dulos:
+1. M√≥dulo de Cadastro: Respons√°vel por manter e gerir o cadastro de usu√°rios e produtos; 
+2. M√≥dulo de Vendas: Respons√°vel por gerir as vendas de carros e as entregas;
+3. M√≥dulo de Geo-Posicionamento: Respons√°vel por gerir o cadastro de cidades, estados e endere√ßos.
 
 
 ## Como executar
 
-Baixe o projeto para sua m·quina com `git clone https://github.com/DEVin-NDD/M2P2-DEVinCar` ent„o conecte a sua m·quina com um SQL Server local e atualize-o rodando no diretÛrio do projeto o comando `dotnet ef database update`. AÌ vocÍ ter· o SQL Server atualizado e o projeto est· pronto para ser executado com `dotnet run`. Por padr„o a rota ser·: `https://localhost:7019/` e para acessar o swaggerUI `https://localhost:7019/swagger/index.html`.
+Baixe o projeto para sua m√°quina com `git clone https://github.com/DEVin-NDD/M2P2-DEVinCar` ent√£o conecte a sua m√°quina com um SQL Server local e atualize-o rodando no diret√≥rio do projeto o comando `dotnet ef database update`. A√≠ voc√™ ter√° o SQL Server atualizado e o projeto est√° pronto para ser executado com `dotnet run`. Por padr√£o a rota ser√°: `https://localhost:7019/` e para acessar o swaggerUI `https://localhost:7019/swagger/index.html`.
 
 ## Como ele foi feito
 
-A aplicaÁ„o foi desenvolvida em 3 squads distribuÌdas para os 3 mÛdulos, cada squad continha um PO (Product Owner) que era respons·vel por distribuir o desenvolvimento das funcionalidades do sistema entre os integrantes das squads. Cada funcionalidade foi desenvolvida em uma branch separada da Develop e quando pronta enviada para o PO resolver o Pull Request. AlÈm disso tambÈm foi utilizado a metodologia Kanban utilizando o Trello como quadro. 
+A aplica√ß√£o foi desenvolvida em 3 squads distribu√≠das para os 3 m√≥dulos, cada squad continha um PO (Product Owner) que era respons√°vel por distribuir o desenvolvimento das funcionalidades do sistema entre os integrantes das squads. Cada funcionalidade foi desenvolvida em uma branch separada da Develop e quando pronta enviada para o PO resolver o Pull Request. Al√©m disso tamb√©m foi utilizado a metodologia Kanban utilizando o Trello como quadro. 
 
 ## Squads
 
@@ -24,15 +26,15 @@ A aplicaÁ„o foi desenvolvida em 3 squads distribuÌdas para os 3 mÛdulos, cada sq
 
 **PO**: Gabriel @get-Friday
 
-**Tema**: MÛdulo de Cadastro
+**Tema**: M√≥dulo de Cadastro
 
 Integrantes:
 
     * Edmilson Gomes Dos Santos
     * Gabriel Elias Thomas
-    * Ernesto Procopio Campos De Ara˙jo
+    * Ernesto Procopio Campos De Ara√∫jo
     * Rodrigo Costa Da Rosa
-    * Vitor Serr„o
+    * Vitor Serr√£o
     * Webert Sousa Silva
     * Angelo Sarto Neto
     * Lucas Pinheiro Martins
@@ -44,28 +46,28 @@ Integrantes:
 
 **PO**: Erlon @lelonerlon
 
-**Tema**: MÛdulo de Vendas
+**Tema**: M√≥dulo de Vendas
 
 Integrantes:
 
     * Eliane De Lima Henriqueta
-    * Erlon RessurreiÁ„o De Jesus
+    * Erlon Ressurrei√ß√£o De Jesus
     * Camila Padua Cassimiro
     * Ana Ciochetta
     * Fernando Henrique Madruga Baroni
-    * Raul CÈsar Mulerschat
+    * Raul C√©sar Mulerschat
     * Leandro Fortes Santos
-    * Bruna Simıes Moita
-    * AndrÈ LuÌs Knapik
+    * Bruna Sim√µes Moita
+    * Andr√© Lu√≠s Knapik
     * Joao Victor Loiola Bittencourt
     * Angelo Almeida Carniel Filho
-    * Vicente Campos De S·
+    * Vicente Campos De S√°
 
 ### Squad 3
 
 **PO**: Natanael @NatanVieira
 
-**Tema**: MÛdulo de Geo-Posicionamento
+**Tema**: M√≥dulo de Geo-Posicionamento
 
 Integrantes:
 
